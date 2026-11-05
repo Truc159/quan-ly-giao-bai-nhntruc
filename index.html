@@ -1338,6 +1338,37 @@
             background: linear-gradient(90deg, #8b5cf6, #4f46e5);
         }
 
+        /* [CODE165] Nút QUẢN LÍ USERS ở khung bên trái & Tab trong Modal */
+        #left-sidebar #btn-user-manager {
+            background: linear-gradient(90deg, #f43f5e, #d946ef) !important;
+        }
+
+        #user-modal .um-tab {
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: .02em;
+            color: #475569;
+            background: #e2e8f0;
+            white-space: nowrap;
+            transition: all .15s ease;
+        }
+
+        #user-modal .um-tab.on {
+            color: #fff;
+            background: linear-gradient(90deg, #f43f5e, #c026d3);
+            box-shadow: 0 2px 8px rgba(244, 63, 94, .38);
+        }
+
+        @media screen and (min-width: 1024px) {
+            #user-modal .um-tab {
+                font-size: 16px;
+                padding: 10px 22px;
+            }
+        }
+
         body.layout-portrait #left-sidebar #btn-mix-sidebar,
         body.is-student #left-sidebar #btn-mix-sidebar {
             display: none !important;
@@ -5498,7 +5529,7 @@
         }
 
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-user-manager {
-            box-shadow: 0 0 0 3px #4f46e5, 0 6px 14px rgba(79, 70, 229, .45)
+            box-shadow: 0 0 0 3px #f43f5e, 0 6px 14px rgba(244, 63, 94, .45)
         }
     </style>
     <style id="code160-style">
@@ -8436,7 +8467,7 @@
                 </button>
                 <button id="btn-user-manager" type="button" onclick="openUserManager()"
                     title="Quản lý học sinh, tài khoản và duyệt vào lớp"
-                    class="side-btn teacher-only-btn bg-gradient-to-r from-indigo-600 to-blue-600 relative flex items-center justify-center gap-1.5">
+                    class="side-btn teacher-only-btn bg-gradient-to-r from-rose-500 via-pink-600 to-fuchsia-600 relative flex items-center justify-center gap-1.5">
                     <span>QUẢN LÍ USERS</span>
                     <span id="um-pending-badge"
                         class="hidden bg-red-500 text-white text-[12px] font-black px-2 py-0.5 rounded-full shadow border-2 border-white animate-pulse">0</span>
@@ -9650,26 +9681,22 @@
         <!-- [CODE165] QUẢN LÍ USERS & PHÊ DUYỆT HỌC SINH TẬP TRUNG -->
         <div id="user-modal"
             class="absolute inset-0 bg-black/75 z-[68] hidden flex justify-center items-center opacity-0 transition-opacity duration-300 no-print">
-            <div class="bg-white w-[1120px] max-w-[96%] h-[780px] max-h-[94%] rounded-2xl flex flex-col relative overflow-hidden shadow-2xl">
+            <div class="bg-white w-full h-full flex flex-col relative overflow-hidden">
                 <!-- Header -->
-                <div class="px-5 py-3.5 bg-gradient-to-r from-indigo-700 via-blue-600 to-teal-600 flex justify-between items-center gap-2 text-white shrink-0 shadow-md">
-                    <div class="flex items-center gap-2.5 min-w-0">
+                <div
+                    class="px-3 py-2 bg-gradient-to-r from-rose-600 via-pink-600 to-fuchsia-700 flex justify-between items-center gap-2 text-white shrink-0 shadow-md">
+                    <div class="flex items-center gap-2.5 min-w-0 flex-wrap">
                         <span class="text-2xl">👥</span>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h2 class="text-[22px] font-black uppercase tracking-wide leading-tight">Quản Lí Users &amp; Học Sinh</h2>
-                                <span id="um-header-badge" class="bg-white/20 text-white text-xs font-black px-2.5 py-0.5 rounded-full">0 chờ duyệt</span>
-                            </div>
-                            <p class="text-xs font-bold text-indigo-100">Duyệt học sinh vào lớp tập trung, quản lý tài khoản và danh sách các lớp</p>
-                        </div>
+                        <h2 class="text-[24px] font-black uppercase tracking-wide truncate">Quản Lí Users &amp; Học Sinh</h2>
+                        <span id="um-header-badge" class="bg-white/20 text-white text-xs font-black px-2.5 py-0.5 rounded-full">0 chờ duyệt</span>
                     </div>
-                    <div class="flex items-center gap-2 shrink-0">
+                    <div class="flex items-center gap-1 shrink-0">
                         <button type="button" onclick="UserManager.refresh()" title="Làm mới dữ liệu từ máy chủ"
-                            class="px-3.5 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-xs font-black transition-colors flex items-center gap-1.5 cursor-pointer">
+                            class="px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-xs font-black transition-colors flex items-center gap-1 cursor-pointer mr-1">
                             <span>↻</span> Làm mới
                         </button>
-                        <button type="button" onclick="goHome()" title="Về trang chủ" aria-label="Về trang chủ"
-                            class="home-btn hover:bg-white/20 p-1.5 rounded-full transition-colors">
+                        <button type="button" onclick="closeUserManager(); goHome();" title="Về trang chủ" aria-label="Về trang chủ"
+                            class="home-btn hover:bg-white/20 p-1.5 rounded-full transition-colors cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3"
                                     d="M3 11.5 12 4l9 7.5M5.5 10v9.5a.5.5 0 0 0 .5.5h4v-5.5h4V20h4a.5.5 0 0 0 .5-.5V10"></path>
@@ -9684,29 +9711,29 @@
                 </div>
 
                 <!-- Tabs -->
-                <div class="px-5 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap gap-2 shrink-0">
+                <div id="um-tabs" class="px-3 py-1.5 bg-slate-50 border-b border-slate-200 flex flex-wrap gap-1.5 shrink-0">
                     <button type="button" id="um-tab-pending" onclick="UserManager.setTab('pending')"
-                        class="px-4 py-2 rounded-xl font-black text-sm transition-all bg-indigo-600 text-white shadow-sm flex items-center gap-2 cursor-pointer">
+                        class="um-tab on cursor-pointer">
                         <span>🔔 Yêu Cầu Chờ Duyệt</span>
-                        <span id="um-tab-pending-count" class="hidden bg-red-500 text-white text-[11px] font-black px-2 py-0.5 rounded-full shadow">0</span>
+                        <span id="um-tab-pending-count" class="hidden bg-red-500 text-white text-[11px] font-black px-2 py-0.5 rounded-full shadow ml-1">0</span>
                     </button>
                     <button type="button" id="um-tab-accounts" onclick="UserManager.setTab('accounts')"
-                        class="px-4 py-2 rounded-xl font-black text-sm transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 flex items-center gap-2 cursor-pointer">
+                        class="um-tab cursor-pointer">
                         <span>🔑 Tài Khoản Học Sinh</span>
-                        <span id="um-tab-accounts-count" class="bg-slate-200 text-slate-700 text-[11px] font-black px-2 py-0.5 rounded-full">0</span>
+                        <span id="um-tab-accounts-count" class="bg-slate-200 text-slate-700 text-[11px] font-black px-2 py-0.5 rounded-full ml-1">0</span>
                     </button>
                     <button type="button" id="um-tab-rosters" onclick="UserManager.setTab('rosters')"
-                        class="px-4 py-2 rounded-xl font-black text-sm transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 flex items-center gap-2 cursor-pointer">
+                        class="um-tab cursor-pointer">
                         <span>🏫 Học Sinh Các Lớp</span>
-                        <span id="um-tab-rosters-count" class="bg-slate-200 text-slate-700 text-[11px] font-black px-2 py-0.5 rounded-full">0</span>
+                        <span id="um-tab-rosters-count" class="bg-slate-200 text-slate-700 text-[11px] font-black px-2 py-0.5 rounded-full ml-1">0</span>
                     </button>
                 </div>
 
                 <!-- Body -->
-                <div id="um-body" class="flex-1 overflow-y-auto custom-scrollbar p-5 bg-slate-100"></div>
+                <div id="um-body" class="flex-1 overflow-y-auto custom-scrollbar p-3 bg-slate-100"></div>
 
                 <!-- Footer -->
-                <div class="px-5 py-2.5 bg-white border-t border-slate-200 flex justify-between items-center gap-2 shrink-0">
+                <div class="px-3 py-1.5 bg-white border-t border-slate-200 flex justify-between items-center gap-2 shrink-0">
                     <div id="um-footer-status" class="text-xs font-bold text-slate-500">Hệ thống quản lý người dùng tập trung</div>
                     <button type="button" onclick="closeUserManager()"
                         class="px-6 py-2 rounded-xl font-black text-slate-700 bg-slate-200 hover:bg-slate-300 uppercase text-sm transition-colors cursor-pointer">
@@ -24208,12 +24235,13 @@
         // [CODE87] Nút HOME / TRANG CHỦ: từ bất kỳ thư mục / cửa sổ nào cũng đóng hết và về thẳng trang chủ
         function goHome() {
             try { closeMyResults(); } catch (e) { }
-            ['result-detail-modal', 'results-modal', 'folder-modal', 'move-topic-modal', 'assign-modal', 'cm-form-modal'].forEach(id => {
+            ['result-detail-modal', 'results-modal', 'folder-modal', 'move-topic-modal', 'assign-modal', 'cm-form-modal', 'user-modal'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) { el.classList.add('opacity-0'); el.classList.add('hidden'); }
             });
             try { libCurrentFolderId = null; closeLibrary(); } catch (e) { }
             try { cmView = 'list'; cmClassId = null; closeClassManager(); } catch (e) { }
+            try { if (typeof closeUserManager === 'function') closeUserManager(); } catch (e) { }
             try { if (window.ClassNet && ClassNet.setView) ClassNet.setView('mine'); if (typeof closeStudentClasses === 'function') closeStudentClasses(); } catch (e) { }
             // Học sinh đang làm dở bài thì giữ nguyên bài; còn lại trả về màn hình trang chủ (dashboard)
             const inQuiz = isStudentMode && hasStartedQuiz && !isQuizSubmitted && questionsData.length > 0;
@@ -27456,9 +27484,9 @@
                     var tabBtn = document.getElementById('um-tab-' + t);
                     if (tabBtn) {
                         if (state.tab === t) {
-                            tabBtn.className = 'px-4 py-2 rounded-xl font-black text-sm transition-all bg-indigo-600 text-white shadow-sm flex items-center gap-2 cursor-pointer';
+                            tabBtn.className = 'um-tab on cursor-pointer';
                         } else {
-                            tabBtn.className = 'px-4 py-2 rounded-xl font-black text-sm transition-all bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 flex items-center gap-2 cursor-pointer';
+                            tabBtn.className = 'um-tab cursor-pointer';
                         }
                     }
                 });
