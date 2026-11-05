@@ -15896,10 +15896,18 @@
 
         function loadStudentResultsFromStorage() {
             try {
+                const rTs = Number(localStorage.getItem('matrix_last_results_reset_ts') || 0);
                 const raw = localStorage.getItem('matrix_student_results_v1');
                 if (raw) {
                     const parsed = JSON.parse(raw);
                     if (parsed && typeof parsed === 'object') {
+                        if (rTs > 0) {
+                            Object.keys(parsed).forEach(k => {
+                                if (Array.isArray(parsed[k])) {
+                                    parsed[k] = parsed[k].filter(r => r && (r.submittedTs || r.submittedAt || 0) >= rTs);
+                                }
+                            });
+                        }
                         // [CODE58] Gộp với dữ liệu đang có trong bộ nhớ (kết quả mới tải về mà chưa kịp/không lưu được vào localStorage không bị mất)
                         const mem = (studentResultsByTopic && typeof studentResultsByTopic === 'object') ? studentResultsByTopic : {};
                         Object.keys(mem).forEach(k => {
@@ -15907,6 +15915,7 @@
                             if (!Array.isArray(parsed[k])) parsed[k] = [];
                             arr.forEach(r => {
                                 if (!r || !r.id) return;
+                                if (rTs > 0 && (r.submittedTs || r.submittedAt || 0) < rTs) return;
                                 const i = parsed[k].findIndex(x => x && x.id === r.id);
                                 if (i < 0) parsed[k].push(r);
                                 else if (r.detail && !parsed[k][i].detail) parsed[k][i] = r;
@@ -16207,8 +16216,15 @@
             try { window.CloudSync && CloudSync.noteResultDeleted(currentViewingResultsTopicId, resultId); } catch (e) { }
             studentResultsByTopic[currentViewingResultsTopicId] = list.filter(item => item.id !== resultId);
             saveStudentResultsToStorage();
+            try {
+                const api = window.CloudSync && CloudSync.api;
+                if (api && api.teacherReady()) {
+                    api.req('DELETE', 's', 'results/' + api.enc(currentViewingResultsTopicId) + '/' + api.enc(resultId)).catch(function () { });
+                }
+            } catch (e) { }
             renderResultsModalContent();
             renderLibraryList();
+            if (window.CODE83Home) window.CODE83Home.refresh();
         }
 
         function clearCurrentTopicResults() {
@@ -16221,9 +16237,22 @@
             try { list.forEach(r => window.CloudSync && CloudSync.noteResultDeleted(currentViewingResultsTopicId, r.id)); } catch (e) { }
             studentResultsByTopic[currentViewingResultsTopicId] = [];
             saveStudentResultsToStorage();
+
+            // [CODE-SYNC-RESET] Đồng bộ xóa trực tiếp trên Firebase và phát tín hiệu dọn sạch đến máy học sinh
+            try {
+                const api = window.CloudSync && CloudSync.api;
+                if (api && api.teacherReady()) {
+                    const now = Date.now();
+                    api.req('DELETE', 's', 'results/' + api.enc(currentViewingResultsTopicId)).catch(function () { });
+                    api.req('PUT', 's', 'system/results_reset', { resetTs: now, topicId: currentViewingResultsTopicId, by: 'teacher' }).catch(function () { });
+                    try { localStorage.setItem('matrix_last_results_reset_ts', String(now)); } catch (e) { }
+                }
+            } catch (e) { }
+
             renderResultsModalContent();
             renderLibraryList();
-            showModal('Đã xóa kết quả', 'Đã xóa toàn bộ kết quả học sinh của chủ đề này.', 'info');
+            if (window.CODE83Home) window.CODE83Home.refresh();
+            showModal('Đã xóa kết quả', 'Đã xóa toàn bộ kết quả học sinh của chủ đề này (máy học sinh sẽ tự động đồng bộ làm sạch).', 'info');
         }
 
         window.addEventListener('storage', (e) => {
@@ -27206,6 +27235,8 @@
                     h += '<button type="button" onclick="UserManager.approveAll()" class="px-4 py-2 rounded-xl font-black text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 shadow text-xs uppercase flex items-center gap-1.5 cursor-pointer active:scale-95">';
                     h += '<span>✓</span> Duyệt tất cả (' + pending.length + ')</button>';
                 }
+                h += '<button type="button" onclick="UserManager.resetAllTestResults()" class="px-3.5 py-2 rounded-xl font-black text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-xs uppercase flex items-center gap-1.5 cursor-pointer active:scale-95" title="Xóa sạch toàn bộ kết quả thi thử trên máy chủ và đồng bộ xóa trên toàn bộ thiết bị học sinh">';
+                h += '<span>🧹</span> Dọn sạch kết quả thi</button>';
                 h += '<button type="button" onclick="UserManager.refresh()" class="px-3.5 py-2 rounded-xl font-black text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-xs uppercase flex items-center gap-1 cursor-pointer">';
                 h += '<span>↻</span> Làm mới</button>';
                 h += '</div>';
@@ -27514,11 +27545,70 @@
                 updateBadge();
             }
 
+            /* Xóa sạch toàn bộ kết quả thi thử và đồng bộ xóa trên máy học sinh */
+            function resetAllTestResults() {
+                if (!confirm('⚠️ BẠN CÓ CHẮC CHẮN MUỐN XÓA SẠCH TOÀN BỘ KẾT QUẢ THI THỬ?\n\n' +
+                    '1. Toàn bộ kết quả bài làm học sinh trên máy chủ sẽ được xóa sạch.\n' +
+                    '2. Lệnh dọn dẹp sẽ tự động phát tín hiệu tới mọi điện thoại/máy tính học sinh để xóa sạch dữ liệu thi thử cũ.\n' +
+                    '3. Khung "Hoạt động gần đây" và bảng "Vinh danh học sinh" sẽ được làm mới về ban đầu.\n\n' +
+                    'Bấm OK để tiến hành dọn sạch.')) return;
+
+                var now = Date.now();
+                var a = API();
+
+                // 1. Xóa cục bộ trên máy hiện tại
+                if (typeof studentResultsByTopic !== 'undefined') {
+                    studentResultsByTopic = {};
+                }
+                try { localStorage.setItem('matrix_student_results_v1', '{}'); } catch (e) { }
+                try { localStorage.removeItem('matrix_c85_board_v1'); } catch (e) { }
+                try { localStorage.setItem('matrix_last_results_reset_ts', String(now)); } catch (e) { }
+
+                // 2. Xóa metadata CloudSync trên máy hiện tại
+                try {
+                    if (window.CloudSync && window.CloudSync._state && window.CloudSync._state.meta) {
+                        window.CloudSync._state.meta.results = {};
+                        window.CloudSync._state.meta.delRes = [];
+                    }
+                    var raw = localStorage.getItem('matrix_cloud_meta_v1');
+                    if (raw) {
+                        var m = JSON.parse(raw);
+                        m.results = {};
+                        m.delRes = [];
+                        localStorage.setItem('matrix_cloud_meta_v1', JSON.stringify(m));
+                    }
+                } catch (e) { }
+
+                // 3. Gửi lệnh xóa lên Firebase
+                if (a && a.teacherReady()) {
+                    showToast('⏳ Đang xóa trên máy chủ và phát tín hiệu dọn sạch...');
+                    var pReset = a.req('PUT', 's', 'system/results_reset', { resetTs: now, by: 'teacher', all: true });
+                    var pDel = a.req('DELETE', 's', 'results');
+                    Promise.all([pReset, pDel]).then(function () {
+                        showToast('🧹 ĐÃ DỌN SẠCH TOÀN BỘ KẾT QUẢ THI THỬ TRÊN TOÀN HỆ THỐNG!');
+                        if (window.CODE83Home) window.CODE83Home.refresh();
+                        if (typeof renderLibraryList === 'function') renderLibraryList();
+                        var rm = document.getElementById('results-modal');
+                        if (rm && !rm.classList.contains('hidden') && typeof renderResultsModalContent === 'function') {
+                            renderResultsModalContent();
+                        }
+                    }).catch(function (err) {
+                        showToast('⚠️ Đã xóa máy hiện tại. Lỗi máy chủ: ' + (err && err.message ? err.message : err));
+                        if (window.CODE83Home) window.CODE83Home.refresh();
+                    });
+                } else {
+                    showToast('✅ Đã xóa sạch kết quả trên máy này!');
+                    if (window.CODE83Home) window.CODE83Home.refresh();
+                    if (typeof renderLibraryList === 'function') renderLibraryList();
+                }
+            }
+
             // Expose globally
             window.UserManager = {
                 open: function () { window.openUserManager(); },
                 close: function () { window.closeUserManager(); },
                 setTab: function (t) { state.tab = t; render(); },
+                resetAllTestResults: resetAllTestResults,
                 refresh: function () {
                     showToast('⏳ Đang cập nhật dữ liệu từ máy chủ...');
                     var a = API();
@@ -27602,17 +27692,100 @@
             function lsGet85(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } }
             function myClasses() { var c = lsGet85(LS_CACHE85); return Array.isArray(c) ? c : []; }
             function myName() { try { return String(document.getElementById('main-fullname-input').value || '').normalize('NFC').toLowerCase().replace(/\s+/g, ' ').trim(); } catch (e) { return ''; } }
-            function loadCloudCache() { var o = lsGet85(LS_BOARD85); if (o && o.recs && typeof o.recs === 'object') { cloud.recs = o.recs; cloud.ts = o.ts || 0; } }
+            function loadCloudCache() {
+                var rTs = Number(localStorage.getItem('matrix_last_results_reset_ts') || 0);
+                var o = lsGet85(LS_BOARD85);
+                if (o && o.recs && typeof o.recs === 'object') {
+                    if (rTs > 0 && (o.ts || 0) < rTs) {
+                        try { localStorage.removeItem(LS_BOARD85); } catch (e) { }
+                        cloud.recs = {};
+                        cloud.ts = 0;
+                        return;
+                    }
+                    cloud.recs = o.recs;
+                    cloud.ts = o.ts || 0;
+                }
+            }
             function slim(o) {
                 return {
                     id: o.id, studentName: o.studentName || o.name || '', studentClass: o.studentClass || '', className: o.className || '', classIds: o.classIds,
                     score10: o.score10, scorePercent: o.scorePercent, submittedTs: o.submittedTs || o.submittedAt || 0
                 };
             }
+            /* [CODE-SYNC-RESET] Kiểm tra tín hiệu dọn sạch kết quả từ máy chủ Giáo viên */
+            var lastResetCheck = 0;
+            function checkRemoteReset() {
+                var api = window.CloudSync && CloudSync.api;
+                if (!api || document.hidden) return Promise.resolve(false);
+                if (Date.now() - lastResetCheck < 8000) return Promise.resolve(false);
+                lastResetCheck = Date.now();
+                var ok = false; try { ok = !!api.effStu(); } catch (e) { }
+                if (!ok) return Promise.resolve(false);
+
+                return api.req('GET', 's', 'system/results_reset').then(function (info) {
+                    if (!info || !info.resetTs) return false;
+                    var rTs = Number(info.resetTs) || 0;
+                    var lastTs = Number(localStorage.getItem('matrix_last_results_reset_ts') || 0);
+                    if (rTs <= lastTs) return false;
+
+                    var targetTid = info.topicId || null;
+
+                    // 1. Dọn dẹp kết quả trong bộ nhớ
+                    if (typeof studentResultsByTopic !== 'undefined' && studentResultsByTopic) {
+                        if (targetTid) {
+                            delete studentResultsByTopic[targetTid];
+                        } else {
+                            Object.keys(studentResultsByTopic).forEach(function (k) {
+                                var list = studentResultsByTopic[k];
+                                if (Array.isArray(list)) {
+                                    studentResultsByTopic[k] = list.filter(function (r) {
+                                        return r && (r.submittedTs || r.submittedAt || 0) >= rTs;
+                                    });
+                                }
+                            });
+                        }
+                    }
+
+                    // 2. Ghi đè cập nhật localStorage
+                    try {
+                        if (targetTid) {
+                            var raw = JSON.parse(localStorage.getItem('matrix_student_results_v1') || '{}');
+                            delete raw[targetTid];
+                            localStorage.setItem('matrix_student_results_v1', JSON.stringify(raw));
+                        } else {
+                            localStorage.setItem('matrix_student_results_v1', JSON.stringify(studentResultsByTopic || {}));
+                        }
+                    } catch (e) { }
+
+                    // 3. Xóa cache bảng vinh danh
+                    try { localStorage.removeItem(LS_BOARD85); } catch (e) { }
+                    if (targetTid) {
+                        if (cloud.recs && cloud.recs[targetTid]) delete cloud.recs[targetTid];
+                    } else {
+                        cloud.recs = {};
+                    }
+                    cloud.ts = 0;
+
+                    // 4. Lưu mốc đã đồng bộ
+                    localStorage.setItem('matrix_last_results_reset_ts', String(rTs));
+
+                    // 5. Làm sạch metadata CloudSync nếu có
+                    try {
+                        if (window.CloudSync && CloudSync._state && CloudSync._state.meta) {
+                            CloudSync._state.meta.results = {};
+                        }
+                    } catch (e) { }
+
+                    lastSig = '';
+                    schedule();
+                    return true;
+                }).catch(function () { return false; });
+            }
             /* Học sinh: tải kết quả của các bạn trong lớp (chỉ các đề được giao cho lớp mình), lưu nhớ 2 phút, bỏ phần chi tiết bài làm cho nhẹ */
             function fetchCloud(force) {
                 var api = window.CloudSync && CloudSync.api;
                 if (cloud.busy || document.hidden || !api) return;
+                try { checkRemoteReset(); } catch (e) { }
                 if (!force && Date.now() - cloud.ts < 120000) return;
                 var ok = false; try { ok = !!api.effStu(); } catch (e) { }
                 if (!ok) return;
@@ -27642,7 +27815,7 @@
                     lastSig = ''; schedule();
                 }, function () { cloud.busy = false; cloud.ts = Date.now() - 90000; });
             }
-            function kick() { if (isStu()) { try { fetchCloud(false); } catch (e) { } } }
+            function kick() { if (isStu()) { try { checkRemoteReset(); } catch (e) { } try { fetchCloud(false); } catch (e) { } } }
             function wrapHtml(d) { return '<div id="code83-home"' + (d.stu ? ' class="c85-stu"' : '') + '>' + html(d) + '</div>'; }
 
             var IC = {
@@ -27748,14 +27921,20 @@
                     }
                 }
                 var resMap = (typeof studentResultsByTopic !== 'undefined' && studentResultsByTopic) ? studentResultsByTopic : {};
+                var curResetTs = Number(localStorage.getItem('matrix_last_results_reset_ts') || 0);
                 function mine(r) { return !stu || norm(r.studentName || r.name) === me; }
                 if (stu) {   /* gộp kết quả của máy này + kết quả các bạn cùng lớp lấy từ máy chủ (không trùng mã) */
                     var merged = {};
-                    Object.keys(resMap).forEach(function (k) { merged[k] = arr(resMap[k]).slice(); });
+                    Object.keys(resMap).forEach(function (k) {
+                        merged[k] = arr(resMap[k]).filter(function (r) {
+                            return !curResetTs || (r && (r.submittedTs || r.submittedAt || 0) >= curResetTs);
+                        });
+                    });
                     Object.keys(cloud.recs).forEach(function (k) {
                         var have = {}; (merged[k] = merged[k] || []).forEach(function (r) { if (r && r.id) have[r.id] = 1; });
                         arr(cloud.recs[k]).forEach(function (r) {
                             if (!r || have[r.id]) return;
+                            if (curResetTs && (r.submittedTs || r.submittedAt || 0) < curResetTs) return;
                             if (Array.isArray(r.classIds) && r.classIds.length && !r.classIds.some(function (i) { return mineIds[i]; })) return;
                             merged[k].push(r);
                         });
@@ -28032,7 +28211,10 @@
 
             function render(container) {
                 if (!container) return false;
-                if (isStu()) { if (!cloud.ts) loadCloudCache(); }
+                if (isStu()) {
+                    try { checkRemoteReset(); } catch (e) { }
+                    if (!cloud.ts) loadCloudCache();
+                }
                 var d = collect();
                 container.innerHTML = wrapHtml(d);
                 el = container.firstChild;
@@ -28069,7 +28251,13 @@
             function init() {
                 ['saveToStorage', 'saveStudentResultsToStorage', 'cmSave', 'loadStudentResultsFromStorage', 'cmLoad', 'closeStudentClasses'].forEach(wrap);
                 tick = setInterval(function () { if (el) schedule(); }, 30000);
-                document.addEventListener('visibilitychange', function () { if (!document.hidden) schedule(); });
+                document.addEventListener('visibilitychange', function () {
+                    if (!document.hidden) {
+                        if (isStu()) { try { checkRemoteReset(); } catch (e) { } }
+                        schedule();
+                    }
+                });
+                setTimeout(function () { if (isStu()) { try { checkRemoteReset(); } catch (e) { } } }, 1200);
             }
             window.CODE83Home = { render: render, refresh: refresh };
             window.CODE85Home = window.CODE83Home;
