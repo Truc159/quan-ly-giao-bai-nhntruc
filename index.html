@@ -8493,128 +8493,195 @@
 
         /* --- TĂNG KÍCH THƯỚC VÀ ĐỘ ĐẬM SẮC NÉT CHO CÁC NÚT THANH BÊN (SIDEBAR) --- */
         #left-sidebar .side-btn {
-            font-size: 21px !important;
+            font-size: 23px !important;
             font-weight: 900 !important;
             letter-spacing: 0.025em !important;
-            -webkit-text-stroke: 0.35px currentColor !important;
-            padding: 13.5px 12px !important;
+            -webkit-text-stroke: 0.4px currentColor !important;
+            padding: 14px 12px !important;
         }
 
         /* --- HỌ VÀ TÊN GIÁO VIÊN: TO RÕ, ĐẬM NÉT, GỌN GÀNG TRÊN 1 HÀNG --- */
-        #user-name {
+        #user-name,
+        #left-sidebar #user-name,
+        body #left-sidebar #user-name {
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
-            font-size: clamp(17px, 1.35vw, 21.5px) !important;
+            font-size: 21px !important;
             font-weight: 900 !important;
             letter-spacing: -0.01em !important;
-            -webkit-text-stroke: 0.35px currentColor !important;
+            -webkit-text-stroke: 0.4px currentColor !important;
             display: block !important;
+            max-width: 100% !important;
         }
         #user-role-label {
-            font-size: 14.5px !important;
+            font-size: 16px !important;
             font-weight: 900 !important;
             letter-spacing: 0.03em !important;
             -webkit-text-stroke: 0.25px currentColor !important;
         }
 
-        /* --- TIÊU ĐỀ CÁC THẺ TRANG CHỦ (THƯ VIỆN ĐỀ THI, LỚP HỌC, HỌC SINH...) --- */
+        /* --- CỬA SỔ CHÍNH: TĂNG TO TOÀN DIỆN MỌI CHI TIẾT --- */
+        /* 1. Tiêu đề các khối (Thư viện đề thi, Lớp học của tôi, Học sinh tiêu biểu...) */
         #code83-home h3 {
-            font-size: 23px !important;
+            font-size: 28.5px !important;
             font-weight: 900 !important;
-            letter-spacing: 0.02em !important;
-            -webkit-text-stroke: 0.35px currentColor !important;
-        }
-
-        /* Số liệu thống kê to và đậm nét */
-        #code83-home .c83-num {
-            font-size: 40px !important;
-            font-weight: 900 !important;
+            letter-spacing: 0.025em !important;
             -webkit-text-stroke: 0.45px currentColor !important;
         }
+
+        /* 2. Số liệu thống kê cực kỳ to, nổi bật và đậm nét */
+        #code83-home .c83-num {
+            font-size: 50px !important;
+            font-weight: 900 !important;
+            -webkit-text-stroke: 0.5px currentColor !important;
+            line-height: 1.05 !important;
+        }
         #code83-home .c83-lbl {
-            font-size: 16.5px !important;
+            font-size: 20px !important;
             font-weight: 800 !important;
-            -webkit-text-stroke: 0.2px currentColor !important;
+            -webkit-text-stroke: 0.25px currentColor !important;
+            color: #334155 !important;
+        }
+        #code83-home .c83-cap {
+            font-size: 17px !important;
+            font-weight: 800 !important;
+            color: #64748b !important;
         }
 
-        /* Danh sách học sinh tiêu biểu & bảng điểm */
-        .c99-name, .c83-star-name {
-            font-size: 20px !important;
+        /* 3. Khối Học sinh tiêu biểu: tên học sinh to rõ, điểm số to rõ */
+        #code83-home .c99-name, #code83-home .c83-star-name {
+            font-size: 24.5px !important;
             font-weight: 900 !important;
             letter-spacing: 0.01em !important;
-            -webkit-text-stroke: 0.3px currentColor !important;
+            -webkit-text-stroke: 0.35px currentColor !important;
         }
-        .c99-sc {
-            font-size: 23px !important;
+        #code83-home .c99-sc {
+            font-size: 28px !important;
             font-weight: 900 !important;
             -webkit-text-stroke: 0.4px currentColor !important;
         }
-        .c99-sub, .c83-star-sub {
-            font-size: 15px !important;
+        #code83-home .c83-star-sub, #code83-home .c99-sub {
+            font-size: 17.5px !important;
             font-weight: 700 !important;
+            color: #475569 !important;
+        }
+        #code83-home .c99-no {
+            font-size: 24px !important;
+            font-weight: 900 !important;
         }
 
-        /* Thẻ đề thi đề xuất & nút tạo đề nhanh */
+        /* 4. Khối Đề thi đề xuất */
         #code83-home .c83-rec-title {
-            font-size: 23px !important;
+            font-size: 28px !important;
             font-weight: 900 !important;
-            letter-spacing: 0.015em !important;
-            -webkit-text-stroke: 0.35px currentColor !important;
+            letter-spacing: 0.02em !important;
+            -webkit-text-stroke: 0.45px currentColor !important;
+            line-height: 1.25 !important;
+        }
+        #code83-home .c83-subj {
+            font-size: 18.5px !important;
+            font-weight: 800 !important;
+            color: #1e40af !important;
         }
         #code83-home .c83-rec-meta {
+            font-size: 17.5px !important;
+            font-weight: 700 !important;
+            color: #64748b !important;
+        }
+        #code83-home .c83-tag {
+            font-size: 16.5px !important;
+            font-weight: 900 !important;
+            -webkit-text-stroke: 0.25px currentColor !important;
+        }
+
+        /* 5. Khối Hoạt động gần đây */
+        #code83-home .c83-act-name {
+            font-size: 23px !important;
+            font-weight: 900 !important;
+            -webkit-text-stroke: 0.35px currentColor !important;
+            color: #0f172a !important;
+        }
+        #code83-home .c83-act-sub {
+            font-size: 17.5px !important;
+            font-weight: 700 !important;
+            color: #475569 !important;
+        }
+        #code83-home .c83-act-score {
+            font-size: 24px !important;
+            font-weight: 900 !important;
+            -webkit-text-stroke: 0.35px currentColor !important;
+            color: #2563eb !important;
+        }
+        #code83-home .c83-act-time {
+            font-size: 16.5px !important;
+            font-weight: 700 !important;
+            color: #64748b !important;
+        }
+
+        /* 6. Khối Khu vực tạo đề nhanh */
+        #code83-home .c83-mini button,
+        #code83-home .c83-mixbtn,
+        #code83-home .c85-quick-btn {
+            font-size: 17.5px !important;
+            font-weight: 900 !important;
+            -webkit-text-stroke: 0.35px currentColor !important;
+            letter-spacing: 0.02em !important;
+            padding: 8px 14px !important;
+        }
+        #code83-home .c83-quick-t {
+            font-size: 23.5px !important;
+            font-weight: 900 !important;
+            -webkit-text-stroke: 0.4px currentColor !important;
+        }
+        #code83-home .c83-quick-p {
+            font-size: 17.5px !important;
+            font-weight: 700 !important;
+            color: #475569 !important;
+        }
+
+        /* 7. Nút truy cập nhanh và thông báo trống */
+        #code83-home .c85-quick,
+        #code83-home .c85-quick b {
+            font-size: 18.5px !important;
+            font-weight: 900 !important;
+        }
+        #code83-home .c85-quick small {
             font-size: 15.5px !important;
             font-weight: 700 !important;
         }
-        #code83-home .c83-tag {
-            font-size: 14.5px !important;
-            font-weight: 900 !important;
-            -webkit-text-stroke: 0.2px currentColor !important;
-        }
-        #code83-home .c85-quick-btn {
-            font-size: 16px !important;
-            font-weight: 900 !important;
-            -webkit-text-stroke: 0.3px currentColor !important;
-        }
-        #code83-home .c85-quick-tx {
-            font-size: 17px !important;
-            font-weight: 900 !important;
-            -webkit-text-stroke: 0.25px currentColor !important;
-        }
-        #code83-home .c83-act {
-            font-size: 17px !important;
-        }
-        #code83-home .c83-act b {
-            font-size: 19px !important;
-            font-weight: 900 !important;
-            -webkit-text-stroke: 0.3px currentColor !important;
+        #code83-home .c83-empty {
+            font-size: 18px !important;
+            font-weight: 700 !important;
         }
 
-        /* Tiêu đề Modal & bảng Quản lí Users / Lớp học */
-        #user-modal h2, #class-modal h2 {
-            font-size: 26.5px !important;
+        /* 8. Dòng chữ Design ở chân trang */
+        .c164-credit, #designer-badge {
+            font-size: 17.5px !important;
             font-weight: 900 !important;
-            letter-spacing: 0.02em !important;
-            -webkit-text-stroke: 0.35px currentColor !important;
-        }
-        .um-table th, .cm-table th {
-            font-size: 17px !important;
-            font-weight: 900 !important;
-            letter-spacing: 0.02em !important;
             -webkit-text-stroke: 0.25px currentColor !important;
         }
+
+        /* 9. Tiêu đề Modal & bảng Quản lí Users / Lớp học */
+        #user-modal h2, #class-modal h2 {
+            font-size: 28px !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.02em !important;
+            -webkit-text-stroke: 0.4px currentColor !important;
+        }
+        .um-table th, .cm-table th {
+            font-size: 18px !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.02em !important;
+            -webkit-text-stroke: 0.3px currentColor !important;
+        }
         .um-table td, .cm-table td {
-            font-size: 16.5px !important;
+            font-size: 17px !important;
         }
         .cm-btn, .um-btn {
-            font-size: 15.5px !important;
+            font-size: 17px !important;
             font-weight: 900 !important;
-            -webkit-text-stroke: 0.2px currentColor !important;
-        }
-        #designer-badge {
-            font-size: 15px !important;
-            font-weight: 900 !important;
-            -webkit-text-stroke: 0.2px currentColor !important;
+            -webkit-text-stroke: 0.25px currentColor !important;
         }
 
         /* BẢO TOÀN TUYỆT ĐỐI ROBOTO & KATEX CHO CÂU HỎI, ĐÁP ÁN VÀ CÔNG THỨC */
