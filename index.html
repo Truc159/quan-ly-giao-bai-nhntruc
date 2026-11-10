@@ -4513,7 +4513,23 @@
         }
 
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout {
-            display: flex !important
+            display: flex !important;
+            margin-top: 8px !important;
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.75) !important;
+            box-shadow: 0 1.5px 4px rgba(220, 38, 38, 0.35) !important;
+            height: 37px !important;
+            min-height: 37px !important;
+            max-height: 37px !important;
+            padding: 0 6px !important;
+            border-radius: 9px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 4px !important;
+            cursor: pointer !important;
         }
 
         body.layout-portrait:not(.printing-a4) #left-sidebar #user-box {
@@ -4556,20 +4572,7 @@
             white-space: nowrap
         }
 
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex: 0 0 auto;
-            width: 34px;
-            height: 34px;
-            margin-left: auto;
-            border: 0;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ef4444, #b91c1c);
-            color: #fff;
-            box-shadow: 0 2px 6px rgba(185, 28, 28, .35)
-        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico { display: none !important; }
 
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico:active {
             transform: scale(.92)
@@ -8818,9 +8821,7 @@
             white-space: nowrap !important;
             line-height: 1.2 !important;
         }
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico {
-            display: none !important;
-        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico { display: none !important; }
 
         /* 3. DANH SÁCH TAB BUTTON XẾP DỌC THEO CỘT BÊN TRÁI (TƯƠNG TỰ HÌNH 1) */
         body.layout-portrait:not(.printing-a4) #bottom-controls-grid {
@@ -8898,8 +8899,22 @@
         /* Nút Đăng xuất ở cuối danh sách */
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout {
             display: flex !important;
-            margin-top: auto !important;
-            background-color: #dc2626 !important;
+            margin-top: 8px !important;
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.75) !important;
+            box-shadow: 0 1.5px 4px rgba(220, 38, 38, 0.35) !important;
+            height: 37px !important;
+            min-height: 37px !important;
+            max-height: 37px !important;
+            padding: 0 6px !important;
+            border-radius: 9px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 4px !important;
+            cursor: pointer !important;
         }
 
         /* 4. KHU VỰC NỘI DUNG BÊN PHẢI (RIGHT PANE): TỐI ƯU TOÀN DIỆN */
@@ -9062,7 +9077,7 @@
         /* [CODE-FIX-LOGOUT] HIỂN THỊ NÚT ĐĂNG XUẤT RÕ RÀNG Ở CẢ 2 NƠI (ĐÁY THANH BÊN & GÓC THẺ USER) */
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout {
             display: flex !important;
-            margin-top: auto !important;
+            margin-top: 8px !important;
             background: linear-gradient(135deg, #ef4444, #dc2626) !important;
             color: #ffffff !important;
             border: 1px solid rgba(255, 255, 255, 0.75) !important;
@@ -9072,30 +9087,19 @@
             max-height: 37px !important;
             padding: 0 6px !important;
             border-radius: 9px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 4px !important;
+            cursor: pointer !important;
         }
 
         body.layout-portrait:not(.printing-a4) #left-sidebar #user-box {
             position: relative !important;
         }
 
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            position: absolute !important;
-            top: 4px !important;
-            right: 4px !important;
-            width: 24px !important;
-            height: 24px !important;
-            border-radius: 50% !important;
-            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-            color: #ffffff !important;
-            border: 1.5px solid #ffffff !important;
-            box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.2) !important;
-            cursor: pointer !important;
-            z-index: 10 !important;
-            padding: 0 !important;
-        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico { display: none !important; }
 
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico svg {
             width: 13px !important;
@@ -9136,6 +9140,66 @@
             margin-top: 0 !important;
             margin-bottom: auto !important;
             max-height: calc(100vh - 12px) !important;
+        }
+    
+        /* [CODE-FIX-LANDSCAPE-SCROLL] CHO PHÉP THANH BÊN TRƯỢT LÊN/XUỐNG MƯỢT MÀ KHI XOAY NGANG */
+        #left-sidebar {
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: thin !important;
+        }
+
+        body:not(.layout-portrait) #left-sidebar #btn-logout {
+            display: flex !important;
+            margin-top: 10px !important;
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.75) !important;
+            box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35) !important;
+            cursor: pointer !important;
+        }
+
+        /* Khi xoay ngang trên điện thoại / tablet thấp: tinh chỉnh kích thước để toàn bộ các tab và nút ĐĂNG XUẤT vừa vặn trên màn hình */
+        @media (max-height: 700px) {
+            body:not(.layout-portrait) #left-sidebar {
+                padding: 6px 8px !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+            body:not(.layout-portrait) #left-sidebar #user-box {
+                padding: 4px 6px !important;
+                margin-bottom: 4px !important;
+            }
+            body:not(.layout-portrait) #left-sidebar #c99-wrap,
+            body:not(.layout-portrait) #left-sidebar #c99-ring {
+                width: 38px !important;
+                height: 38px !important;
+            }
+            body:not(.layout-portrait) #left-sidebar #user-name {
+                font-size: 13.5px !important;
+                margin-top: 1px !important;
+            }
+            body:not(.layout-portrait) #left-sidebar #user-role-label {
+                font-size: 10.5px !important;
+            }
+            body:not(.layout-portrait) #bottom-controls-grid {
+                gap: 4px !important;
+                margin-top: 5px !important;
+            }
+            body:not(.layout-portrait) #left-sidebar .side-btn {
+                font-size: 12.5px !important;
+                padding: 6px 8px !important;
+                border-radius: 9px !important;
+                min-height: 33px !important;
+                height: 33px !important;
+                gap: 6px !important;
+            }
+            body:not(.layout-portrait) #left-sidebar #btn-logout {
+                margin-top: 6px !important;
+                height: 33px !important;
+                min-height: 33px !important;
+            }
         }
     </style>
 </head>
