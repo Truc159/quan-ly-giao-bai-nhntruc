@@ -3114,7 +3114,7 @@
         }
 
         body.kb-form #login-modal .p-6 {
-            padding: 12px 16px !important;
+            padding: 10px 16px 260px 16px !important;
         }
 
         /* [CODE78] iOS tự PHÓNG TO trang khi ô nhập có chữ < 16px -> trang bị lệch/mất; ép 16px cho ô nhập trong các cửa sổ chính */
@@ -9147,10 +9147,36 @@
         }
 
         body.kb-form #login-modal:not(.hidden) > div,
-        body.layout-portrait:not(.printing-a4).kb-form #login-modal:not(.hidden) > div {
+        body.kb-typing #login-modal:not(.hidden) > div,
+        body.layout-portrait:not(.printing-a4).kb-form #login-modal:not(.hidden) > div,
+        body.layout-portrait:not(.printing-a4).kb-typing #login-modal:not(.hidden) > div {
             margin-top: 0 !important;
             margin-bottom: auto !important;
-            max-height: calc(100vh - 12px) !important;
+            max-height: 380px !important;
+            max-height: min(390px, calc(var(--vvp-h, 100vh) - 16px)) !important;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+
+        body.kb-form #login-modal .p-6,
+        body.kb-typing #login-modal .p-6,
+        body.layout-portrait:not(.printing-a4).kb-form #login-modal .p-6,
+        body.layout-portrait:not(.printing-a4).kb-typing #login-modal .p-6 {
+            padding-top: 10px !important;
+            padding-bottom: 260px !important;
+        }
+
+        body.kb-form #login-modal .space-y-4 > :not([hidden]) ~ :not([hidden]),
+        body.kb-typing #login-modal .space-y-4 > :not([hidden]) ~ :not([hidden]),
+        body.layout-portrait:not(.printing-a4).kb-form #login-modal .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+            margin-top: 8px !important;
+        }
+
+        body.kb-form #login-modal label,
+        body.kb-typing #login-modal label,
+        body.layout-portrait:not(.printing-a4).kb-form #login-modal label {
+            margin-bottom: 2px !important;
+            font-size: 12px !important;
         }
     
         /* [CODE-FIX-LANDSCAPE-SCROLL] CHO PHÉP THANH BÊN TRƯỢT LÊN/XUỐNG MƯỢT MÀ KHI XOAY NGANG */
@@ -14908,17 +14934,38 @@
             if (a.readOnly || a.disabled) return false;
             if (tn === 'INPUT' && /^(checkbox|radio|button|submit|reset|file|range|color|date|datetime-local|time|month|week|hidden)$/i.test(a.type || '')) return false;
             if (!a.closest || a.closest('#questions-container')) return false;
-            return Boolean(a.closest('#app-wrapper'));
+            return Boolean(a.closest('#app-wrapper') || a.closest('#login-modal'));
         }
         function _fieldScrollIntoModal(el) {
             try {
+                if (!el || !el.getBoundingClientRect) return;
+                const modalBox = (el.closest && el.closest('#login-modal > div')) || null;
+                const targetEl = (el.closest && (
+                    el.closest('#login-pass2-group') ||
+                    el.closest('#login-pass-group') ||
+                    el.closest('#login-user-group') ||
+                    el.closest('#login-name-group') ||
+                    el.closest('#login-class-group') ||
+                    el.closest('[id$="-group"]')
+                )) || el;
+
+                if (modalBox) {
+                    const mr = modalBox.getBoundingClientRect();
+                    const tr = targetEl.getBoundingClientRect();
+                    const delta = tr.top - mr.top - 10;
+                    modalBox.scrollTop += delta;
+                    try { window.scrollTo(0, 0); } catch (err) { }
+                    return;
+                }
+
                 let p = el.parentElement;
                 while (p && p !== document.body) {
                     const cs = getComputedStyle(p);
                     if (/(auto|scroll)/.test(cs.overflowY) && p.scrollHeight > p.clientHeight + 2) {
-                        const pr = p.getBoundingClientRect(), er = el.getBoundingClientRect();
-                        const target = p.scrollTop + (er.top - pr.top) - 20;
+                        const pr = p.getBoundingClientRect(), tr = targetEl.getBoundingClientRect();
+                        const target = p.scrollTop + (tr.top - pr.top) - 12;
                         p.scrollTop = Math.max(0, target);
+                        try { window.scrollTo(0, 0); } catch (err) { }
                         return;
                     }
                     p = p.parentElement;
@@ -14929,7 +14976,7 @@
             const t = e.target;
             if (!t || !t.closest || t.closest('#questions-container')) return;
             if (!isTypingInForm()) return;
-            [0, 80, 250, 500, 850].forEach(ms => setTimeout(() => {
+            [0, 60, 150, 300, 550, 850].forEach(ms => setTimeout(() => {
                 if (document.activeElement !== t) return;
                 resizeApp();
                 _fieldScrollIntoModal(t);
@@ -15021,6 +15068,10 @@
             const vh = window.innerHeight;
             // [CODE34] Đang gõ trong ô trả lời (bàn phím mở): giữ nguyên hướng màn hình đã xác định, không đổi bố cục
             const vvp = window.visualViewport;
+            try {
+                const vvpHeight = vvp ? Math.round(vvp.height) : (window.innerHeight || 600);
+                document.documentElement.style.setProperty('--vvp-h', vvpHeight + 'px');
+            } catch (e) { }
             const typingForm = isTypingInForm();   // [CODE78]
             const typing = isTypingInQuestions() || typingForm;
             let portrait = vh > vw;
@@ -15111,7 +15162,16 @@
         }
 
         let _rzRaf = 0;
-        const resizeAppRaf = () => { if (_rzRaf) return; _rzRaf = requestAnimationFrame(() => { _rzRaf = 0; resizeApp(); }); };   // [CODE77]
+        const resizeAppRaf = () => {
+            if (_rzRaf) return;
+            _rzRaf = requestAnimationFrame(() => {
+                _rzRaf = 0;
+                resizeApp();
+                if (isTypingInForm() && document.activeElement) {
+                    _fieldScrollIntoModal(document.activeElement);
+                }
+            });
+        };   // [CODE77]
         window.addEventListener('resize', resizeAppRaf, { passive: true });
         const _handleOrientationChange = () => { [30, 100, 200, 350, 500, 800].forEach(ms => setTimeout(resizeApp, ms)); };
         window.addEventListener('orientationchange', _handleOrientationChange, { passive: true });
@@ -17646,6 +17706,8 @@
             applyRolePermissionsUI(role);
 
             if (loginModal) {
+                try { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); } catch (e) { }
+                document.body.classList.remove('kb-form', 'kb-typing');
                 loginModal.classList.add('opacity-0');
                 setTimeout(() => {
                     loginModal.classList.add('hidden');
@@ -17772,7 +17834,10 @@
                 boxEl.classList.add('border-red-500', 'ring-2', 'ring-red-200');
             }
             if (focusInputEl) {
-                focusInputEl.focus();
+                try { focusInputEl.focus(); } catch (e) { }
+                if (typeof _fieldScrollIntoModal === 'function') {
+                    _fieldScrollIntoModal(focusInputEl);
+                }
             }
         }
 
