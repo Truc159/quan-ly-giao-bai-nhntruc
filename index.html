@@ -8495,8 +8495,8 @@
             text-rendering: optimizeLegibility;
         }
 
-        /* --- THANH BÊN (SIDEBAR) VỚI PHÔNG QUICKSAND GỌN GÀNG, HIỆN ĐẠI --- */
-        #left-sidebar .side-btn {
+        /* --- THANH BÊN (SIDEBAR) TRÊN MÁY TÍNH (DESKTOP) --- */
+        body:not(.layout-portrait) #left-sidebar .side-btn {
             font-size: 15.5px !important;
             font-weight: 700 !important;
             letter-spacing: 0.02em !important;
@@ -8509,10 +8509,9 @@
             -webkit-text-stroke: 0 !important;
         }
 
-        /* --- HỌ VÀ TÊN GIÁO VIÊN: TRÊN 1 HÀNG DUY NHẤT, RÕ RÀNG, SẮC NÉT --- */
-        #user-name,
-        #left-sidebar #user-name,
-        body #left-sidebar #user-name {
+        /* --- HỌ VÀ TÊN GIÁO VIÊN TRÊN MÁY TÍNH --- */
+        body:not(.layout-portrait) #user-name,
+        body:not(.layout-portrait) #left-sidebar #user-name {
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
@@ -8524,166 +8523,151 @@
             line-height: 1.3 !important;
             -webkit-text-stroke: 0 !important;
         }
-        #user-role-label {
+        body:not(.layout-portrait) #user-role-label {
             font-size: 13px !important;
             font-weight: 700 !important;
             letter-spacing: 0.03em !important;
             -webkit-text-stroke: 0 !important;
         }
 
-        /* --- CỬA SỔ CHÍNH (DASHBOARD): PHÔNG QUICKSAND ĐẸP MẮT, RÕ RÀNG --- */
-        /* 1. Tiêu đề các khối */
-        #code83-home h3 {
+        /* --- CỬA SỔ CHÍNH (DASHBOARD): PHÔNG QUICKSAND ĐẸP MẮT, RÕ RÀNG TRÊN MÁY TÍNH --- */
+        body:not(.layout-portrait) #code83-home h3 {
             font-size: 19px !important;
             font-weight: 700 !important;
             letter-spacing: 0.01em !important;
             color: #1e293b !important;
             -webkit-text-stroke: 0 !important;
         }
-
-        /* 2. Số liệu thống kê */
-        #code83-home .c83-num {
+        body:not(.layout-portrait) #code83-home .c83-num {
             font-size: 38px !important;
             font-weight: 700 !important;
             line-height: 1.1 !important;
             color: #0f172a !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-lbl {
+        body:not(.layout-portrait) #code83-home .c83-lbl {
             font-size: 14.5px !important;
             font-weight: 600 !important;
             color: #475569 !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-cap {
+        body:not(.layout-portrait) #code83-home .c83-cap {
             font-size: 13px !important;
             font-weight: 500 !important;
             color: #64748b !important;
             -webkit-text-stroke: 0 !important;
         }
-
-        /* 3. Khối Học sinh tiêu biểu (Bảng vàng) */
-        #code83-home .c99-name, #code83-home .c83-star-name {
+        body:not(.layout-portrait) #code83-home .c99-name,
+        body:not(.layout-portrait) #code83-home .c83-star-name {
             font-size: 16px !important;
             font-weight: 700 !important;
             color: #0f172a !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c99-sc {
+        body:not(.layout-portrait) #code83-home .c99-sc {
             font-size: 18px !important;
             font-weight: 700 !important;
             color: #2563eb !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-star-sub, #code83-home .c99-sub {
+        body:not(.layout-portrait) #code83-home .c83-star-sub,
+        body:not(.layout-portrait) #code83-home .c99-sub {
             font-size: 13px !important;
             font-weight: 500 !important;
             color: #64748b !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c99-no {
+        body:not(.layout-portrait) #code83-home .c99-no {
             font-size: 18px !important;
             font-weight: 700 !important;
         }
-
-        /* 4. Khối Đề thi đề xuất */
-        #code83-home .c83-rec-title {
+        body:not(.layout-portrait) #code83-home .c83-rec-title {
             font-size: 17.5px !important;
             font-weight: 700 !important;
             line-height: 1.35 !important;
             color: #0f172a !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-subj {
+        body:not(.layout-portrait) #code83-home .c83-subj {
             font-size: 14px !important;
             font-weight: 600 !important;
             color: #1e40af !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-rec-meta {
+        body:not(.layout-portrait) #code83-home .c83-rec-meta {
             font-size: 13.5px !important;
             font-weight: 500 !important;
             color: #64748b !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-tag {
+        body:not(.layout-portrait) #code83-home .c83-tag {
             font-size: 12.5px !important;
             font-weight: 700 !important;
             -webkit-text-stroke: 0 !important;
         }
-
-        /* 5. Khối Hoạt động gần đây */
-        #code83-home .c83-act-name {
+        body:not(.layout-portrait) #code83-home .c83-act-name {
             font-size: 15.5px !important;
             font-weight: 700 !important;
             color: #0f172a !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-act-sub {
+        body:not(.layout-portrait) #code83-home .c83-act-sub {
             font-size: 13.5px !important;
             font-weight: 500 !important;
             color: #475569 !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-act-score {
+        body:not(.layout-portrait) #code83-home .c83-act-score {
             font-size: 16px !important;
             font-weight: 700 !important;
             color: #2563eb !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-act-time {
+        body:not(.layout-portrait) #code83-home .c83-act-time {
             font-size: 12.5px !important;
             font-weight: 500 !important;
             color: #64748b !important;
             -webkit-text-stroke: 0 !important;
         }
-
-        /* 6. Khối Khu vực tạo đề nhanh */
-        #code83-home .c83-mini button,
-        #code83-home .c83-mixbtn,
-        #code83-home .c85-quick-btn {
+        body:not(.layout-portrait) #code83-home .c83-mini button,
+        body:not(.layout-portrait) #code83-home .c83-mixbtn,
+        body:not(.layout-portrait) #code83-home .c85-quick-btn {
             font-size: 13.5px !important;
             font-weight: 700 !important;
             letter-spacing: 0.01em !important;
             padding: 8px 12px !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-quick-t {
+        body:not(.layout-portrait) #code83-home .c83-quick-t {
             font-size: 17px !important;
             font-weight: 700 !important;
             color: #1e293b !important;
             -webkit-text-stroke: 0 !important;
         }
-        #code83-home .c83-quick-p {
+        body:not(.layout-portrait) #code83-home .c83-quick-p {
             font-size: 13.5px !important;
             font-weight: 500 !important;
             color: #64748b !important;
             -webkit-text-stroke: 0 !important;
         }
-
-        /* 7. Nút truy cập nhanh và thông báo trống */
-        #code83-home .c85-quick,
-        #code83-home .c85-quick b {
+        body:not(.layout-portrait) #code83-home .c85-quick,
+        body:not(.layout-portrait) #code83-home .c85-quick b {
             font-size: 15px !important;
             font-weight: 700 !important;
         }
-        #code83-home .c85-quick small {
+        body:not(.layout-portrait) #code83-home .c85-quick small {
             font-size: 12.5px !important;
             font-weight: 500 !important;
         }
-        #code83-home .c83-empty {
+        body:not(.layout-portrait) #code83-home .c83-empty {
             font-size: 15px !important;
             font-weight: 600 !important;
         }
-
-        /* 8. Dòng chữ Design ở chân trang */
         .c164-credit, #designer-badge {
             font-size: 13.5px !important;
             font-weight: 600 !important;
             -webkit-text-stroke: 0 !important;
         }
-
-        /* 9. Tiêu đề Modal & bảng Quản lí Users / Lớp học */
         #user-modal h2, #class-modal h2 {
             font-size: 21px !important;
             font-weight: 700 !important;
@@ -8705,6 +8689,277 @@
             font-size: 14px !important;
             font-weight: 700 !important;
             -webkit-text-stroke: 0 !important;
+        }
+
+        /* ==========================================================================
+           RESPONSIVE TỐI ƯU TOÀN DIỆN CHO ĐIỆN THOẠI & TABLET (MÀN HÌNH DỌC & NHỎ)
+           NÚT PHÍA TRÊN HẸP VÀ NHỎ LẠI GỌN GÀNG, KHÔNG BỊ TRÀN CHỮ, KHÔNG VỠ DÒNG
+           ========================================================================== */
+        body.layout-portrait:not(.printing-a4) #left-sidebar {
+            width: 100% !important;
+            height: auto !important;
+            padding: 4px 6px !important;
+            border-radius: 14px !important;
+            gap: 3px !important;
+            background: #ffffff !important;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+            border: 1.5px solid #dbeafe !important;
+        }
+
+        /* 1. Khung thông tin cá nhân (User box) gọn gàng thanh mảnh */
+        body.layout-portrait:not(.printing-a4) #left-sidebar #user-box {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            flex-wrap: nowrap !important;
+            padding: 3px 8px !important;
+            min-height: 32px !important;
+            gap: 6px !important;
+            border-radius: 10px !important;
+            background: linear-gradient(90deg, #f0f7ff 0%, #e0f2fe 100%) !important;
+            border: 1px solid #bae6fd !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #c99-wrap {
+            margin: 0 !important;
+            width: auto !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #c99-ring {
+            width: 26px !important;
+            height: 26px !important;
+            min-width: 26px !important;
+            border-width: 1.5px !important;
+            margin: 0 !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #user-role-label {
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            padding: 1px 5px !important;
+            border-radius: 6px !important;
+            background: #e0e7ff !important;
+            color: #4338ca !important;
+            white-space: nowrap !important;
+            line-height: 1.2 !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #user-name {
+            font-size: 13.5px !important;
+            font-weight: 700 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: 150px !important;
+            line-height: 1.2 !important;
+            color: #1e3a8a !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #user-class {
+            font-size: 11.5px !important;
+            font-weight: 600 !important;
+            color: #475569 !important;
+            white-space: nowrap !important;
+            margin-left: auto !important;
+            line-height: 1.2 !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico {
+            width: 26px !important;
+            height: 26px !important;
+            min-width: 26px !important;
+            border-radius: 50% !important;
+            background: #ef4444 !important;
+            color: #ffffff !important;
+            padding: 3px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-left: 4px !important;
+            box-shadow: 0 1px 4px rgba(239, 68, 68, 0.35) !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico svg {
+            width: 14px !important;
+            height: 14px !important;
+            stroke-width: 3 !important;
+        }
+
+        /* 2. Khung nút điều khiển phía trên: dàn hàng ngang gọn đẹp, cuộn ngang mượt mà */
+        body.layout-portrait:not(.printing-a4) #bottom-controls-grid {
+            flex-direction: row !important;
+            align-items: center !important;
+            margin-top: 3px !important;
+            gap: 4px !important;
+            width: 100% !important;
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
+            scrollbar-width: none !important;
+            padding: 1px 0 !important;
+        }
+        body.layout-portrait:not(.printing-a4) #bottom-controls-grid::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        /* 3. CÁC NÚT PHÍA TRÊN HẸP VÀ NHỎ LẠI: SLIM, GỌN GÀNG, CHỮ KHÔNG BAO GIỜ BỊ XUỐNG DÒNG */
+        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
+            height: 32px !important;
+            min-height: 32px !important;
+            max-height: 32px !important;
+            padding: 2px 7px !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.01em !important;
+            border-radius: 8px !important;
+            border: 1px solid rgba(255, 255, 255, 0.75) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 3.5px !important;
+            line-height: 1 !important;
+            white-space: nowrap !important;
+            flex: 1 1 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+
+        /* Nút Trang chủ dạng biểu tượng vuông vắn, tiết kiệm diện tích */
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home {
+            flex: 0 0 32px !important;
+            width: 32px !important;
+            min-width: 32px !important;
+            max-width: 32px !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home span:last-child {
+            display: none !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home span:first-child {
+            font-size: 15px !important;
+            margin: 0 !important;
+        }
+
+        /* Xử lý icon trong các nút */
+        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:first-child {
+            font-size: 13px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Xử lý nhãn chữ trong các nút: chuẩn 1 hàng, không đứt gãy */
+        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:last-child,
+        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn .bk-desk,
+        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn .bk-mob {
+            font-size: 10px !important;
+            font-weight: 700 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            line-height: 1 !important;
+            display: inline-block !important;
+            text-transform: uppercase !important;
+        }
+
+        /* Khử bỏ border dày 3px và box-shadow to của CODE159 */
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-open-library,
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-student-class,
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-class-manager {
+            border: 1px solid rgba(255, 255, 255, 0.75) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+        }
+
+        /* 4. Khung nội dung chính (Right Pane & Quiz) trên điện thoại */
+        body.layout-portrait:not(.printing-a4) #right-pane {
+            padding: 6px !important;
+            border-radius: 14px !important;
+            gap: 6px !important;
+        }
+        body.layout-portrait:not(.printing-a4) #right-header-box {
+            padding: 5px 8px !important;
+            min-height: 36px !important;
+            border-radius: 10px !important;
+        }
+        body.layout-portrait:not(.printing-a4) #quiz-subtitle {
+            font-size: 14px !important;
+            font-weight: 700 !important;
+        }
+        body.layout-portrait:not(.printing-a4) #timer-badge {
+            font-size: 12px !important;
+            padding: 3px 8px !important;
+            border-radius: 9999px !important;
+        }
+
+        /* Khung màn hình bắt đầu làm bài trắc nghiệm (.result-screen) */
+        body.layout-portrait:not(.printing-a4) .result-screen {
+            padding: 14px 8px !important;
+            border-radius: 14px !important;
+        }
+        body.layout-portrait:not(.printing-a4) .result-screen h3 {
+            font-size: 18px !important;
+            margin-bottom: 8px !important;
+        }
+        body.layout-portrait:not(.printing-a4) .result-screen p {
+            font-size: 12.5px !important;
+            margin-bottom: 12px !important;
+        }
+        body.layout-portrait:not(.printing-a4) .result-screen button {
+            padding: 8px 18px !important;
+            font-size: 14.5px !important;
+        }
+
+        /* 5. TỐI ƯU RIÊNG CHO MÁY TÍNH BẢNG (TABLET) KHI Ở CHẾ ĐỘ DỌC (600px - 1024px) */
+        @media (min-width: 600px) and (max-width: 1024px) {
+            body.layout-portrait:not(.printing-a4) #left-sidebar {
+                padding: 6px 10px !important;
+                border-radius: 16px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #user-box {
+                padding: 5px 12px !important;
+                min-height: 38px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #user-name {
+                font-size: 15.5px !important;
+                max-width: 260px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #user-role-label {
+                font-size: 12px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #user-class {
+                font-size: 12.5px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #bottom-controls-grid {
+                gap: 6px !important;
+                margin-top: 5px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
+                height: 36px !important;
+                min-height: 36px !important;
+                max-height: 36px !important;
+                padding: 4px 10px !important;
+                font-size: 12px !important;
+                border-radius: 10px !important;
+                gap: 5px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:last-child,
+            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn .bk-desk,
+            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn .bk-mob {
+                font-size: 11.5px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home {
+                flex: 0 0 36px !important;
+                width: 36px !important;
+                min-width: 36px !important;
+                max-width: 36px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home span:first-child {
+                font-size: 17px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #right-pane {
+                padding: 10px !important;
+            }
         }
 
         /* ==========================================================================
