@@ -9107,8 +9107,19 @@
             stroke-width: 2.8 !important;
         }
 
-        /* [CODE-FIX-LOGIN-MODAL] SỬA LỖI KHUNG NHẬP MẬT KHẨU / TÊN ĐĂNG NHẬP BỊ TỤT XUỐNG KHI MỞ BÀN PHÍM */
-        body.layout-portrait:not(.printing-a4) #login-modal {
+        /* [CODE-FIX-LOGIN-MODAL] SỬA LỖI KHUNG NHẬP MẬT KHẨU / TÊN ĐĂNG NHẬP BỊ TỤT XUỐNG KHI MỞ BÀN PHÍM VÀ CHỈ HIỆN KHI MỞ MODAL (KHÔNG CHẶN CẢM ỨNG CỦA CÁC TAB) */
+        .hidden,
+        #login-modal.hidden,
+        body.layout-portrait:not(.printing-a4) #login-modal.hidden,
+        #class-modal.hidden,
+        #user-modal.hidden,
+        #library-modal.hidden {
+            display: none !important;
+            pointer-events: none !important;
+            visibility: hidden !important;
+        }
+
+        body.layout-portrait:not(.printing-a4) #login-modal:not(.hidden) {
             position: fixed !important;
             inset: 0 !important;
             top: 0 !important;
@@ -9125,18 +9136,18 @@
             -webkit-overflow-scrolling: touch !important;
             padding: 8px !important;
             box-sizing: border-box !important;
+            pointer-events: auto !important;
         }
 
-        /* Khi bàn phím điện thoại mở để gõ mật khẩu / tên: ghim ngay đầu màn hình, không bị tụt xuống */
-        body.kb-form #login-modal,
-        body.kb-typing #login-modal,
-        body.layout-portrait:not(.printing-a4).kb-form #login-modal {
+        body.kb-form #login-modal:not(.hidden),
+        body.kb-typing #login-modal:not(.hidden),
+        body.layout-portrait:not(.printing-a4).kb-form #login-modal:not(.hidden) {
             align-items: flex-start !important;
             padding-top: calc(env(safe-area-inset-top, 0px) + 6px) !important;
         }
 
-        body.kb-form #login-modal > div,
-        body.layout-portrait:not(.printing-a4).kb-form #login-modal > div {
+        body.kb-form #login-modal:not(.hidden) > div,
+        body.layout-portrait:not(.printing-a4).kb-form #login-modal:not(.hidden) > div {
             margin-top: 0 !important;
             margin-bottom: auto !important;
             max-height: calc(100vh - 12px) !important;
@@ -9152,7 +9163,8 @@
 
         body:not(.layout-portrait) #left-sidebar #btn-logout {
             display: flex !important;
-            margin-top: 10px !important;
+            margin-top: 32px !important;
+            margin-bottom: 16px !important;
             background: linear-gradient(135deg, #ef4444, #dc2626) !important;
             color: #ffffff !important;
             border: 1px solid rgba(255, 255, 255, 0.75) !important;
@@ -9196,10 +9208,32 @@
                 gap: 6px !important;
             }
             body:not(.layout-portrait) #left-sidebar #btn-logout {
-                margin-top: 6px !important;
-                height: 33px !important;
-                min-height: 33px !important;
-            }
+            display: flex !important;
+            margin-top: 32px !important;
+            margin-bottom: 16px !important;
+            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.75) !important;
+            box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35) !important;
+            cursor: pointer !important;
+        }
+        }
+    
+        /* ĐẢM BẢO CÁC NÚT TAB VÀ KHUNG NỘI DUNG NHẬN CHẠM VÀ VUỐT TRƯỢT 100% */
+        body.layout-portrait:not(.printing-a4) #left-sidebar {
+            pointer-events: auto !important;
+            touch-action: pan-y !important;
+            -webkit-overflow-scrolling: touch !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
+            pointer-events: auto !important;
+            cursor: pointer !important;
+            touch-action: manipulation !important;
+        }
+        body.layout-portrait:not(.printing-a4) #right-pane {
+            pointer-events: auto !important;
+            touch-action: pan-y !important;
+            -webkit-overflow-scrolling: touch !important;
         }
     </style>
 </head>
