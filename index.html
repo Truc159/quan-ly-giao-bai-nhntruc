@@ -213,7 +213,7 @@
         /* [CODE47] Font giao diện: UTM HelvetIns (dùng bản cài trên máy nếu có; nếu không sẽ tải file font đặt cùng thư mục với index.html).
            Tên file font: UTMHelvetIns.ttf (hoặc .woff2 / .woff), bản đậm: UTMHelvetIns-Bold.ttf - đặt cùng thư mục hoặc trong thư mục fonts/ */
         @font-face {
-            font-family: 'UTM HelvetIns';
+            font-family: 'Quicksand', 'UTM HelvetIns', 'Segoe UI', Arial, sans-serif;
             font-style: normal;
             font-weight: 400;
             font-display: swap;
@@ -235,7 +235,7 @@
 
         * {
             box-sizing: border-box;
-            font-family: 'UTM HelvetIns', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Quicksand', 'UTM HelvetIns', 'Segoe UI', Arial, sans-serif;
             font-synthesis: weight style;
             -webkit-font-smoothing: antialiased;
             -webkit-tap-highlight-color: transparent;
@@ -8420,7 +8420,7 @@
         </div>
 
         <aside id="left-sidebar"
-            class="no-print w-[250px] shrink-0 h-full bg-white rounded-2xl shadow-lg border-2 border-blue-200/80 p-3.5 flex flex-col overflow-hidden">
+            class="no-print w-[270px] shrink-0 h-full bg-white rounded-2xl shadow-lg border-2 border-blue-200/80 p-3.5 flex flex-col overflow-hidden">
             <div id="user-box"
                 class="bg-gradient-to-r from-sky-100/90 via-blue-50 to-indigo-100/80 rounded-xl px-3 py-3 border border-blue-200 text-center shrink-0 shadow-sm min-w-0">
                 <div id="c99-wrap" class="has">
@@ -8432,8 +8432,7 @@
                 </div>
                 <div id="user-role-label" class="text-[13px] font-black text-indigo-500 uppercase tracking-wider"
                     data-role="GV"><span class="rl-full">👨‍🏫 Giáo viên</span><span class="rl-short">GV</span></div>
-                <div id="user-name" class="text-[20px] font-black text-blue-900 leading-snug break-words">Nguyễn Hà Như
-                    Trúc</div>
+                <div id="user-name" class="font-black text-blue-900 text-center tracking-tight" style="white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; font-size: clamp(14px, 1.15vw, 17px); font-weight: 800; line-height: 1.3; margin-top: 2px;">Nguyễn Hà Như Trúc</div>
                 <div id="user-class" class="hidden text-[16px] font-black text-slate-600 mt-0.5"></div>
                 <!-- [CODE126] Điện thoại: nút ĐĂNG XUẤT dạng biểu tượng nằm cạnh thông tin GV / HS -->
                 <button type="button" id="btn-logout-ico" onclick="logoutApp()" title="Đăng xuất" aria-label="Đăng xuất"
@@ -8449,43 +8448,36 @@
             <div id="bottom-controls-grid" class="flex flex-col gap-3.5 mt-4">
                 <button id="btn-go-home" type="button" onclick="goHome()" title="Về trang chủ"
                     class="side-btn bg-gradient-to-r from-sky-500 to-blue-600">
-                    <svg class="sb-ico" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"
-                        fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
-                        stroke-linejoin="round" aria-hidden="true">
-                        <path d="M3 11l9-8 9 8"></path>
-                        <path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"></path>
-                    </svg>
-                    <span class="sb-txt">🏠 TRANG CHỦ</span>
+                    <span>🏠</span> <span>TRANG CHỦ</span>
                 </button>
                 <button id="btn-open-library" type="button" onclick="openLibrary()"
                     class="side-btn bg-gradient-to-r from-purple-500 to-indigo-600">
-                    THƯ VIỆN
+                    <span>📖</span> <span>THƯ VIỆN</span>
                 </button>
                 <!-- [CODE126] Máy tính: NGÂN HÀNG ĐỀ | Điện thoại: TỰ LUYỆN (cùng một nội dung, đồng bộ) -->
                 <button id="btn-bank" type="button" onclick="window.CODE126Bank &amp;&amp; CODE126Bank.open()"
                     title="Ngân hàng đề / Tự luyện" class="side-btn bg-gradient-to-r from-amber-500 to-orange-600">
-                    <span class="bk-desk"><span class="bk-ico">📚 </span>NGÂN HÀNG ĐỀ</span><span class="bk-mob">TỰ
-                        LUYỆN</span>
+                    <span class="bk-desk"><span>📚</span> NGÂN HÀNG ĐỀ</span><span class="bk-mob"><span>📚</span> TỰ LUYỆN</span>
                 </button>
                 <button id="btn-student-class" type="button" onclick="openStudentClasses()"
                     class="hidden side-btn bg-gradient-to-r from-emerald-500 to-teal-600">
-                    LỚP HỌC
+                    <span>🏫</span> <span>LỚP HỌC</span>
                 </button>
                 <button id="btn-class-manager" type="button" onclick="openClassManager()"
                     class="side-btn teacher-only-btn bg-gradient-to-r from-teal-500 to-cyan-600">
-                    QUẢN LÍ LỚP HỌC
+                    <span>🏫</span> <span>QUẢN LÍ LỚP HỌC</span>
                 </button>
                 <button id="btn-user-manager" type="button" onclick="openUserManager()"
                     class="side-btn teacher-only-btn bg-gradient-to-r from-blue-600 to-indigo-600">
-                    QUẢN LÍ USERS
+                    <span>👥</span> <span>QUẢN LÍ USERS</span>
                 </button>
                 <button id="btn-mix-sidebar" type="button" onclick="if (window.CODE93Mix) CODE93Mix.open()"
                     title="Trộn đề thi thành nhiều mã đề" class="side-btn teacher-only-btn">
-                    🔀 TRỘN ĐỀ THI
+                    <span>🔀</span> <span>TRỘN ĐỀ THI</span>
                 </button>
                 <button type="button" id="btn-logout" onclick="logoutApp()" title="Đăng xuất khỏi hệ thống"
                     class="side-btn bg-red-600">
-                    ĐĂNG XUẤT
+                    <span>🚪</span> <span>ĐĂNG XUẤT</span>
                 </button>
             </div>
         </aside>
