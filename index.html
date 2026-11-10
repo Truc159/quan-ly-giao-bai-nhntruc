@@ -433,7 +433,7 @@
         body.layout-portrait:not(.printing-a4) :is(#questions-container, .qc-live) .katex-display { overflow-x: auto; overflow-y: hidden; max-width: 100%; }
         body.layout-portrait:not(.printing-a4) :is(#questions-container, .qc-live) input[type="text"] { font-size: 16px; }
         body.layout-portrait:not(.printing-a4) :is(#questions-container, .qc-live) > div * { min-width: 0; }
-        body.layout-portrait:not(.printing-a4) #class-modal, body.layout-portrait:not(.printing-a4) #library-modal { max-width: 100vw; }
+        body.layout-portrait:not(.printing-a4) #class-modal, body.layout-portrait:not(.printing-a4) #user-modal, body.layout-portrait:not(.printing-a4) #library-modal { max-width: 100vw; }
 
         /* [CODE20] Chống gian lận: không cho in / bôi đen nội dung đề khi đang làm bài */
         @media print { body.exam-locked #app-wrapper { display: none !important; } body.exam-locked::after { content: 'Không được in / chụp nội dung bài thi.'; display: block; font: 700 20px 'UTM HelvetIns', Arial, sans-serif; padding: 40px; } }
@@ -1001,9 +1001,9 @@
         body.kb-typing :is(#questions-container, .qc-live) { padding-bottom: 40px; }
 
         /* ===== [CODE19] Quản lí lớp học ===== */
-        #class-modal .cm-card { background: #fff; border: 1px solid #cbd5e1; border-radius: 14px; box-shadow: 0 1px 3px rgba(15,23,42,.08); }
-        #class-modal .cm-tab { padding: 8px 16px; border-radius: 999px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: .03em; color: #475569; background: #e2e8f0; white-space: nowrap; }
-        #class-modal .cm-tab.on { color: #fff; background: linear-gradient(90deg, #0d9488, #0891b2); box-shadow: 0 2px 6px rgba(8,145,178,.35); }
+        :is(#class-modal, #user-modal) .cm-card { background: #fff; border: 1px solid #cbd5e1; border-radius: 14px; box-shadow: 0 1px 3px rgba(15,23,42,.08); }
+        :is(#class-modal, #user-modal) .cm-tab { padding: 8px 16px; border-radius: 999px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: .03em; color: #475569; background: #e2e8f0; white-space: nowrap; }
+        :is(#class-modal, #user-modal) .cm-tab.on { color: #fff; background: linear-gradient(90deg, #0d9488, #0891b2); box-shadow: 0 2px 6px rgba(8,145,178,.35); }
         /* [CODE91] ĐIỆN THOẠI (học sinh): "Lớp học của tôi" - tiêu đề + 🏠 + ✕ nằm trên 1 hàng, khung chiếm trọn màn hình; Thư viện bỏ nút "Quay lại" */
         @media screen and (max-width: 700px) {
             #student-class-modal > div { width: 100% !important; max-width: 100% !important; height: 100% !important; max-height: 100% !important; border-radius: 0 !important; }
@@ -1033,15 +1033,15 @@
             #class-modal #cm-tabs .cm-tab { grid-column: span 2; display: flex; align-items: center; justify-content: center; gap: 4px; text-align: center; padding: 9px 3px; border-radius: 12px; font-size: clamp(11px, 3.4vw, 15px); letter-spacing: 0; line-height: 1.15; white-space: nowrap; overflow: hidden; }
             #class-modal #cm-tabs .cm-tab:nth-child(n+4) { grid-column: span 3; }
         }
-        #class-modal .cm-btn { padding: 6px 14px; border-radius: 10px; font-weight: 900; font-size: 13px; border: 1px solid transparent; cursor: pointer; }
-        #class-modal .cm-btn:active { transform: scale(.96); }
-        #class-modal .cm-inp { border: 1px solid #cbd5e1; border-radius: 10px; padding: 6px 10px; font-weight: 700; font-size: 14px; color: #0f172a; background: #fff; outline: none; min-width: 0; }
-        #class-modal .cm-inp:focus { border-color: #0891b2; box-shadow: 0 0 0 2px #a5f3fc; }
-        #class-modal table.cm-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        #class-modal table.cm-table th { background: #f1f5f9; font-size: 12px; font-weight: 900; text-transform: uppercase; color: #334155; padding: 8px 10px; border-bottom: 2px solid #cbd5e1; text-align: left; }
-        #class-modal table.cm-table td { padding: 6px 10px; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #0f172a; vertical-align: middle; }
-        #class-modal table.cm-table tr:hover td { background: #f8fafc; }
-        #class-modal .cm-chip { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; font-weight: 900; }
+        :is(#class-modal, #user-modal) .cm-btn { padding: 6px 14px; border-radius: 10px; font-weight: 900; font-size: 13px; border: 1px solid transparent; cursor: pointer; }
+        :is(#class-modal, #user-modal) .cm-btn:active { transform: scale(.96); }
+        :is(#class-modal, #user-modal) .cm-inp { border: 1px solid #cbd5e1; border-radius: 10px; padding: 6px 10px; font-weight: 700; font-size: 14px; color: #0f172a; background: #fff; outline: none; min-width: 0; }
+        :is(#class-modal, #user-modal) .cm-inp:focus { border-color: #0891b2; box-shadow: 0 0 0 2px #a5f3fc; }
+        :is(#class-modal, #user-modal) table.cm-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        :is(#class-modal, #user-modal) table.cm-table th { background: #f1f5f9; font-size: 12px; font-weight: 900; text-transform: uppercase; color: #334155; padding: 8px 10px; border-bottom: 2px solid #cbd5e1; text-align: left; }
+        :is(#class-modal, #user-modal) table.cm-table td { padding: 6px 10px; border-bottom: 1px solid #e2e8f0; font-weight: 700; color: #0f172a; vertical-align: middle; }
+        :is(#class-modal, #user-modal) table.cm-table tr:hover td { background: #f8fafc; }
+        :is(#class-modal, #user-modal) .cm-chip { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 12px; font-weight: 900; }
 
         /* [CODE70] Quản lí lớp học: chữ to hơn trên máy tính */
         @media screen and (min-width: 1024px) {
@@ -1818,6 +1818,9 @@ body.layout-portrait:not(.printing-a4) #left-sidebar #btn-class-manager{box-shad
                 <button id="btn-class-manager" type="button" onclick="openClassManager()" class="side-btn teacher-only-btn bg-gradient-to-r from-teal-500 to-cyan-600">
                     QUẢN LÍ LỚP HỌC
                 </button>
+                <button id="btn-user-manager" type="button" onclick="openUserManager()" class="side-btn teacher-only-btn bg-gradient-to-r from-blue-600 to-indigo-600">
+                    QUẢN LÍ USERS
+                </button>
                 <button id="btn-mix-sidebar" type="button" onclick="if (window.CODE93Mix) CODE93Mix.open()" title="Trộn đề thi thành nhiều mã đề" class="side-btn teacher-only-btn">
                     🔀 TRỘN ĐỀ THI
                 </button>
@@ -2527,6 +2530,48 @@ body.layout-portrait:not(.printing-a4) #left-sidebar #btn-class-manager{box-shad
                 <div id="cm-body" class="flex-1 overflow-y-auto custom-scrollbar p-3 bg-slate-100"><div class="flex justify-between items-center mb-3"><div class="font-black text-slate-700">Yêu cầu chờ duyệt (0)</div><button type="button" class="cm-btn bg-slate-200" onclick="ClassNet.refreshT()">↻ Làm mới</button></div><div class="cm-card p-6 text-center font-bold text-slate-400">Không có yêu cầu nào đang chờ.</div><div class="font-black text-slate-600 mt-5 mb-2">Đã xử lý</div><div class="cm-card p-2 mb-1 text-sm font-bold">Vũ Bảo Gia Như · 12a15 — <span class="text-green-700">Đã duyệt</span></div><div class="cm-card p-2 mb-1 text-sm font-bold">Ms Trúc · 12A12 — <span class="text-slate-500">Đã bị xóa khỏi lớp</span></div></div>
                 <div class="px-3 py-1.5 bg-white border-t border-slate-200 flex flex-wrap justify-end items-center gap-2 shrink-0">
                     <button type="button" onclick="cmCloseStep()" class="px-6 py-2 rounded-xl font-black text-slate-700 bg-slate-200 hover:bg-slate-300 uppercase text-sm">Đóng</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- [CODE_USERS] QUẢN LÍ USERS: Modal duyệt HS vào lớp linh hoạt -->
+        <div id="user-modal" class="absolute inset-0 bg-black/75 z-[63] flex justify-center items-center transition-opacity duration-300 no-print opacity-0 hidden">
+            <div class="bg-white w-full h-full flex flex-col relative overflow-hidden">
+                <div class="px-3 py-2 bg-gradient-to-r from-blue-600 to-indigo-700 flex justify-between items-center gap-2 text-white shrink-0">
+                    <div class="flex items-center gap-2 min-w-0 flex-wrap">
+                        <span class="text-2xl">👥</span>
+                        <h2 class="text-[24px] font-black uppercase tracking-wide truncate">Quản Lí Users</h2>
+                        <span id="um-badge" class="px-3 py-0.5 rounded-full bg-white/20 text-xs font-black">0 học sinh</span>
+                    </div>
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button type="button" onclick="goHome()" title="Về trang chủ" aria-label="Về trang chủ" class="home-btn hover:bg-white/20 p-1.5 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M3 11.5 12 4l9 7.5M5.5 10v9.5a.5.5 0 0 0 .5.5h4v-5.5h4V20h4a.5.5 0 0 0 .5-.5V10"></path></svg>
+                        </button>
+                        <button type="button" onclick="closeUserManager()" class="hover:bg-white/20 p-1.5 rounded-full transition-colors" title="Đóng">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="px-3 py-2 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 shrink-0">
+                    <div class="flex items-center gap-2 flex-1 min-w-[240px]">
+                        <input id="um-search-input" type="text" placeholder="🔍 Tìm theo Họ tên, Lớp hoặc Tên đăng nhập..." oninput="umOnSearch(this.value)" class="cm-inp flex-1">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <select id="um-filter-status" onchange="umOnFilterChange()" class="cm-inp cursor-pointer text-xs font-bold">
+                            <option value="all">Tất cả trạng thái</option>
+                            <option value="unassigned">Chưa vào lớp nào</option>
+                            <option value="assigned">Đã có lớp</option>
+                            <option value="pending">Có yêu cầu chờ duyệt</option>
+                        </select>
+                        <button type="button" onclick="umRefreshData()" class="cm-btn bg-slate-200 hover:bg-slate-300 text-slate-700">↻ Làm mới</button>
+                    </div>
+                </div>
+                <div id="um-body" class="flex-1 overflow-y-auto custom-scrollbar p-3 bg-slate-100">
+                    <div class="p-8 text-center text-slate-400 font-bold">Đang tải danh sách học sinh...</div>
+                </div>
+                <div class="px-3 py-1.5 bg-white border-t border-slate-200 flex flex-wrap justify-between items-center gap-2 shrink-0">
+                    <span class="text-xs font-bold text-slate-500">GV có thể trực tiếp duyệt HS vào đúng lớp bất kể HS đã gửi yêu cầu hay chưa, hoặc tên bị sai/thiếu ký tự.</span>
+                    <button type="button" onclick="closeUserManager()" class="px-6 py-2 rounded-xl font-black text-slate-700 bg-slate-200 hover:bg-slate-300 uppercase text-sm">Đóng</button>
                 </div>
             </div>
         </div>
@@ -9723,6 +9768,7 @@ body.layout-portrait:not(.printing-a4) #left-sidebar #btn-class-manager{box-shad
 
         function applyRolePermissionsUI(role) {
             const createBtn = document.getElementById('btn-class-manager');
+            const userMgrBtn = document.getElementById('btn-user-manager');
             const pdfBtn = document.getElementById('btn-export-pdf');
             const libBtn = document.getElementById('btn-open-library');
             const bottomGrid = document.getElementById('bottom-controls-grid');
@@ -9742,6 +9788,7 @@ body.layout-portrait:not(.printing-a4) #left-sidebar #btn-class-manager{box-shad
                     mainNameWrapper.classList.add('col-span-8');
                 }
                 if (createBtn) createBtn.classList.add('hidden');
+                if (userMgrBtn) userMgrBtn.classList.add('hidden');
                 if (pdfBtn) pdfBtn.classList.add('hidden');
                 if (libBtn) {
                     libBtn.classList.remove('hidden', 'col-span-2');
@@ -9753,7 +9800,7 @@ body.layout-portrait:not(.printing-a4) #left-sidebar #btn-class-manager{box-shad
                 if (libFooterTeacher) libFooterTeacher.classList.add('hidden');
                 if (libFooterStudent) libFooterStudent.classList.remove('hidden');
 
-                ['editor-modal', 'matrix-builder-modal', 'word-import-modal', 'mix-modal', 'share-link-modal', 'class-modal'].forEach(id => {
+                ['editor-modal', 'matrix-builder-modal', 'word-import-modal', 'mix-modal', 'share-link-modal', 'class-modal', 'user-modal'].forEach(id => {
                     const el = document.getElementById(id);
                     if (el) el.classList.add('hidden', 'opacity-0');
                 });
@@ -9767,6 +9814,7 @@ body.layout-portrait:not(.printing-a4) #left-sidebar #btn-class-manager{box-shad
                     mainNameWrapper.classList.add('col-span-12');
                 }
                 if (createBtn) createBtn.classList.remove('hidden');
+                if (userMgrBtn) userMgrBtn.classList.remove('hidden');
                 if (pdfBtn) pdfBtn.classList.remove('hidden');
                 if (libBtn) {
                     libBtn.classList.remove('hidden', 'col-span-2');
@@ -19615,8 +19663,538 @@ body.layout-portrait:not(.printing-a4) #left-sidebar #btn-class-manager{box-shad
         /* Đăng xuất: đóng cửa sổ lớp học */
         var _lo = window.logoutApp;
         if (typeof _lo === 'function') {
-            window.logoutApp = function () { var m = document.getElementById('student-class-modal'); if (m) m.classList.add('hidden', 'opacity-0'); return _lo.apply(this, arguments); };
+            window.logoutApp = function () {
+                var m = document.getElementById('student-class-modal'); if (m) m.classList.add('hidden', 'opacity-0');
+                var um = document.getElementById('user-modal'); if (um) um.classList.add('hidden', 'opacity-0');
+                return _lo.apply(this, arguments);
+            };
         }
+    })();
+    </script>
+
+    <!-- ============================================================ -->
+    <!-- [CODE_USERS] CHỨC NĂNG QUẢN LÍ USERS CHO GIÁO VIÊN           -->
+    <!-- Cho phép GV xem danh sách tất cả HS từ tài khoản / kết quả / -->
+    <!-- yêu cầu tham gia lớp; linh hoạt duyệt HS vào đúng lớp kể cả  -->
+    <!-- khi HS chưa từng gửi yêu cầu hoặc nhập tên bị sai/thiếu ký tự.-->
+    <!-- ============================================================ -->
+    <script id="user-manager-module">
+    (function () {
+        'use strict';
+
+        let umUsersList = [];
+        let umSearchQuery = '';
+        let umFilterStatus = 'all';
+
+        function _esc(s) {
+            return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+            });
+        }
+
+        function _norm(s) {
+            return String(s || '').normalize('NFC').toLowerCase().replace(/\s+/g, ' ').trim();
+        }
+
+        function _normLoose(s) {
+            return _norm(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+        }
+
+        function _getApi() {
+            return (window.CloudSync && window.CloudSync.api) || null;
+        }
+
+        function _getClasses() {
+            try {
+                if (typeof cmLoad === 'function') cmLoad();
+                if (Array.isArray(window.classesData)) return window.classesData;
+                const raw = localStorage.getItem('matrix_classes_v1');
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function _getAccounts() {
+            try {
+                const raw = localStorage.getItem('matrix_hs_accounts_v1');
+                const o = raw ? JSON.parse(raw) : null;
+                return (o && o.users) ? o.users : {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function _getResultsStudents() {
+            const list = [];
+            try {
+                if (typeof loadStudentResultsFromStorage === 'function') loadStudentResultsFromStorage();
+                const R = window.studentResultsByTopic || {};
+                Object.keys(R).forEach(k => {
+                    const arr = Array.isArray(R[k]) ? R[k] : [];
+                    arr.forEach(r => {
+                        if (r && r.studentName) {
+                            list.push({
+                                name: String(r.studentName).trim(),
+                                cls: String(r.studentClass || r.className || '').trim()
+                            });
+                        }
+                    });
+                });
+            } catch (e) {}
+            return list;
+        }
+
+        function _getJoinRequests() {
+            const reqs = [];
+            try {
+                const a = _getApi();
+                const S = window.ClassNet ? window.ClassNet._state : null;
+                const joins = (S && S.joins) || {};
+                const clsList = _getClasses();
+                clsList.forEach(c => {
+                    const encId = a ? a.enc(c.id) : c.id;
+                    const m = joins[encId] || {};
+                    Object.keys(m).forEach(k => {
+                        const r = m[k];
+                        if (r && r.name) {
+                            reqs.push({
+                                classId: c.id,
+                                className: c.name,
+                                key: k,
+                                name: r.name,
+                                cls: r.cls || '',
+                                status: r.status || 'pending',
+                                ts: r.ts || 0
+                            });
+                        }
+                    });
+                });
+            } catch (e) {}
+            return reqs;
+        }
+
+        function collectAllUsers() {
+            const map = new Map();
+            const classes = _getClasses();
+
+            // 1. Từ tài khoản HS cục bộ
+            const accs = _getAccounts();
+            Object.keys(accs).forEach(u => {
+                const acc = accs[u];
+                if (!acc || !acc.name) return;
+                const loose = _normLoose(acc.name);
+                map.set(loose, {
+                    name: acc.name,
+                    username: acc.u || u,
+                    registeredClass: acc.cls || '',
+                    source: 'Tài khoản đăng kí',
+                    classes: [],
+                    pendingRequests: []
+                });
+            });
+
+            // 2. Từ các lớp học hiện có
+            classes.forEach(c => {
+                (c.students || []).forEach(s => {
+                    if (!s || !s.name) return;
+                    const loose = _normLoose(s.name);
+                    let item = map.get(loose);
+                    if (!item) {
+                        item = {
+                            name: s.name,
+                            username: '',
+                            registeredClass: '',
+                            source: 'Danh sách lớp',
+                            classes: [],
+                            pendingRequests: []
+                        };
+                        map.set(loose, item);
+                    }
+                    if (!item.classes.some(x => x.id === c.id)) {
+                        item.classes.push({ id: c.id, name: c.name });
+                    }
+                });
+            });
+
+            // 3. Từ kết quả làm bài
+            _getResultsStudents().forEach(rs => {
+                const loose = _normLoose(rs.name);
+                let item = map.get(loose);
+                if (!item) {
+                    item = {
+                        name: rs.name,
+                        username: '',
+                        registeredClass: rs.cls || '',
+                        source: 'Làm bài thi',
+                        classes: [],
+                        pendingRequests: []
+                    };
+                    map.set(loose, item);
+                } else if (!item.registeredClass && rs.cls) {
+                    item.registeredClass = rs.cls;
+                }
+            });
+
+            // 4. Từ yêu cầu xin vào lớp
+            _getJoinRequests().forEach(jq => {
+                const loose = _normLoose(jq.name);
+                let item = map.get(loose);
+                if (!item) {
+                    item = {
+                        name: jq.name,
+                        username: '',
+                        registeredClass: jq.cls || '',
+                        source: 'Yêu cầu vào lớp',
+                        classes: [],
+                        pendingRequests: []
+                    };
+                    map.set(loose, item);
+                } else if (!item.registeredClass && jq.cls) {
+                    item.registeredClass = jq.cls;
+                }
+                if (jq.status === 'pending') {
+                    if (!item.pendingRequests.some(x => x.classId === jq.classId)) {
+                        item.pendingRequests.push(jq);
+                    }
+                }
+            });
+
+            return Array.from(map.values()).sort((a, b) => {
+                const la = a.name.trim().split(/\s+/).pop() || '';
+                const lb = b.name.trim().split(/\s+/).pop() || '';
+                return la.localeCompare(lb, 'vi') || a.name.localeCompare(b.name, 'vi');
+            });
+        }
+
+        function renderUsersTable() {
+            const body = document.getElementById('um-body');
+            const badge = document.getElementById('um-badge');
+            if (!body) return;
+
+            const q = _normLoose(umSearchQuery);
+            const classes = _getClasses();
+
+            let filtered = umUsersList.filter(u => {
+                if (q) {
+                    const matchName = _normLoose(u.name).indexOf(q) >= 0;
+                    const matchCls = _normLoose(u.registeredClass).indexOf(q) >= 0;
+                    const matchUser = _normLoose(u.username).indexOf(q) >= 0;
+                    const matchInClass = u.classes.some(c => _normLoose(c.name).indexOf(q) >= 0);
+                    if (!matchName && !matchCls && !matchUser && !matchInClass) return false;
+                }
+                if (umFilterStatus === 'unassigned') {
+                    return u.classes.length === 0;
+                }
+                if (umFilterStatus === 'assigned') {
+                    return u.classes.length > 0;
+                }
+                if (umFilterStatus === 'pending') {
+                    return u.pendingRequests.length > 0;
+                }
+                return true;
+            });
+
+            if (badge) {
+                badge.textContent = `${filtered.length} / ${umUsersList.length} học sinh`;
+            }
+
+            if (!umUsersList.length) {
+                body.innerHTML = `
+                    <div class="cm-card p-10 text-center">
+                        <div class="text-5xl mb-2">👥</div>
+                        <h3 class="text-xl font-black text-slate-700 uppercase mb-1">Chưa có dữ liệu học sinh</h3>
+                        <p class="text-sm font-bold text-slate-500 mb-4">Khi học sinh đăng kí tài khoản, gửi yêu cầu vào lớp hoặc nộp bài làm, danh sách sẽ tự động hiển thị tại đây.</p>
+                        <button type="button" onclick="umRefreshData()" class="cm-btn bg-teal-600 text-white">↻ Làm mới</button>
+                    </div>`;
+                return;
+            }
+
+            if (!filtered.length) {
+                body.innerHTML = `
+                    <div class="cm-card p-8 text-center text-slate-500 font-bold">
+                        Không tìm thấy học sinh nào phù hợp với bộ lọc hiện tại.
+                    </div>`;
+                return;
+            }
+
+            const classOptionsHtml = classes.map(c => `<option value="${_esc(c.id)}">Lớp ${_esc(c.name)}</option>`).join('');
+
+            const rows = filtered.map((u, idx) => {
+                const assignedClsHtml = u.classes.length
+                    ? u.classes.map(c => `
+                        <span class="inline-flex items-center gap-1 bg-teal-100 text-teal-800 text-xs font-black px-2 py-0.5 rounded-full mr-1 mb-1">
+                            Lớp ${_esc(c.name)}
+                            <button type="button" onclick="umRemoveStudentFromClass('${_esc(c.id)}', '${_esc(u.name)}')" title="Gỡ khỏi lớp ${_esc(c.name)}" class="text-red-500 hover:text-red-700 font-black ml-0.5">✕</button>
+                        </span>`).join('')
+                    : '<span class="text-xs font-bold text-slate-400 italic">Chưa vào lớp nào</span>';
+
+                let pendingHtml = '';
+                if (u.pendingRequests && u.pendingRequests.length) {
+                    pendingHtml = u.pendingRequests.map(r => `
+                        <div class="mt-1 flex items-center gap-1.5 flex-wrap">
+                            <span class="text-xs font-black text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">
+                                🔔 Chờ duyệt vào Lớp ${_esc(r.className)}
+                            </span>
+                            <button type="button" onclick="umQuickApproveRequest('${_esc(r.classId)}', '${_esc(r.key)}', '${_esc(u.name)}')" class="cm-btn bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-0.5 px-2">
+                                ✓ Duyệt ngay
+                            </button>
+                        </div>
+                    `).join('');
+                }
+
+                // Gợi ý lớp phù hợp dựa vào tên lớp đăng kí của HS
+                let autoSelectClsId = '';
+                if (u.registeredClass) {
+                    const normRc = _normLoose(u.registeredClass);
+                    const matchedCls = classes.find(c => _normLoose(c.name) === normRc || normRc.indexOf(_normLoose(c.name)) >= 0);
+                    if (matchedCls) autoSelectClsId = matchedCls.id;
+                }
+
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="text-center font-bold text-slate-500">${idx + 1}</td>
+                        <td>
+                            <div class="font-black text-slate-800 text-[15px]">${_esc(u.name)}</div>
+                            <div class="text-xs font-bold text-slate-500 flex items-center gap-2 flex-wrap">
+                                ${u.username ? `<span>👤 <b>${_esc(u.username)}</b></span>` : ''}
+                                ${u.registeredClass ? `<span>🏷️ Nhập: <b>${_esc(u.registeredClass)}</b></span>` : ''}
+                                <span class="text-slate-400">(${_esc(u.source)})</span>
+                            </div>
+                            ${pendingHtml}
+                        </td>
+                        <td>
+                            <div class="flex flex-wrap items-center">${assignedClsHtml}</div>
+                        </td>
+                        <td>
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <select id="um-select-class-${idx}" class="cm-inp text-xs font-bold py-1 px-2 cursor-pointer max-w-[140px]">
+                                    <option value="">-- Chọn lớp --</option>
+                                    ${classes.map(c => `<option value="${_esc(c.id)}" ${c.id === autoSelectClsId ? 'selected' : ''}>Lớp ${_esc(c.name)}</option>`).join('')}
+                                </select>
+                                <button type="button" onclick="umAssignStudentDirect(${idx}, '${_esc(u.name)}')" class="cm-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-sm whitespace-nowrap text-xs py-1 px-3">
+                                    + Duyệt vào lớp
+                                </button>
+                                <button type="button" onclick="umPromptEditAndAssign('${_esc(u.name)}')" title="Sửa tên (nếu nhập sai/thiếu ký tự) rồi duyệt vào lớp" class="cm-btn bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 text-xs py-1 px-2">
+                                    ✏️ Sửa tên & Duyệt
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            body.innerHTML = `
+                <div class="cm-card overflow-x-auto shadow-sm">
+                    <table class="cm-table">
+                        <thead>
+                            <tr>
+                                <th class="text-center w-12">STT</th>
+                                <th>Thông tin học sinh</th>
+                                <th>Lớp hiện tại</th>
+                                <th class="w-80">Duyệt vào lớp linh hoạt</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        window.openUserManager = function () {
+            if (window.isStudentMode) return;
+            const modal = document.getElementById('user-modal');
+            if (!modal) return;
+            if (typeof cmLoad === 'function') cmLoad();
+            umUsersList = collectAllUsers();
+            renderUsersTable();
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            // Kéo thêm yêu cầu tham gia mới nhất nếu có kết nối
+            try {
+                if (window.ClassNet && typeof window.ClassNet.refreshT === 'function') {
+                    window.ClassNet.refreshT();
+                }
+            } catch (e) {}
+        };
+
+        window.closeUserManager = function () {
+            const modal = document.getElementById('user-modal');
+            if (!modal) return;
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        };
+
+        window.umOnSearch = function (val) {
+            umSearchQuery = val;
+            renderUsersTable();
+        };
+
+        window.umOnFilterChange = function () {
+            const sel = document.getElementById('um-filter-status');
+            umFilterStatus = sel ? sel.value : 'all';
+            renderUsersTable();
+        };
+
+        window.umRefreshData = function () {
+            if (typeof cmLoad === 'function') cmLoad();
+            umUsersList = collectAllUsers();
+            renderUsersTable();
+            if (typeof showModal === 'function') {
+                showModal('Đã làm mới', `Đã cập nhật danh sách ${umUsersList.length} học sinh.`, 'success');
+            }
+        };
+
+        // Duyệt HS vào lớp trực tiếp
+        window.umAssignStudentDirect = function (selectIdx, studentName, customName) {
+            const sel = document.getElementById(`um-select-class-${selectIdx}`);
+            const classId = sel ? sel.value : '';
+            if (!classId) {
+                if (typeof showModal === 'function') showModal('Chưa chọn lớp', 'Vui lòng chọn lớp học cần duyệt học sinh vào!', 'info');
+                return;
+            }
+            umAddStudentToClass(classId, customName || studentName);
+        };
+
+        // Linh hoạt sửa tên khi HS nhập sai/thiếu ký tự rồi duyệt vào lớp
+        window.umPromptEditAndAssign = function (currentName) {
+            const classes = _getClasses();
+            if (!classes.length) {
+                if (typeof showModal === 'function') showModal('Chưa có lớp', 'Hãy tạo ít nhất một lớp học trong "QUẢN LÍ LỚP HỌC" trước!', 'info');
+                return;
+            }
+
+            const cleanCur = String(currentName || '').trim();
+            const corrected = prompt('Chỉnh sửa lại Họ và tên chính xác của học sinh (nếu bị sai/thiếu ký tự):', cleanCur);
+            if (corrected === null) return;
+            const finalName = corrected.replace(/\s+/g, ' ').trim();
+            if (!finalName) {
+                alert('Tên học sinh không được để trống!');
+                return;
+            }
+
+            const classNamesList = classes.map((c, i) => `${i + 1}. Lớp ${c.name}`).join('\n');
+            const choice = prompt(`Chọn lớp học để duyệt học sinh "${finalName}" vào:\n${classNamesList}\n\nNhập số thứ tự của lớp (1, 2, ...):`, '1');
+            if (!choice) return;
+
+            const idx = parseInt(choice, 10) - 1;
+            if (isNaN(idx) || idx < 0 || idx >= classes.length) {
+                alert('Số thứ tự lớp không hợp lệ!');
+                return;
+            }
+
+            umAddStudentToClass(classes[idx].id, finalName);
+        };
+
+        function umAddStudentToClass(classId, studentName) {
+            const classes = _getClasses();
+            const cls = classes.find(c => c.id === classId);
+            if (!cls) {
+                if (typeof showModal === 'function') showModal('Lỗi', 'Không tìm thấy lớp học!', 'error');
+                return;
+            }
+            if (!Array.isArray(cls.students)) cls.students = [];
+
+            const name = String(studentName || '').replace(/\s+/g, ' ').trim();
+            if (!name) return;
+
+            if (cls.students.some(s => _norm(s.name) === _norm(name))) {
+                if (typeof showModal === 'function') showModal('Lưu ý', `Học sinh "${name}" đã có trong Lớp ${cls.name}.`, 'info');
+                return;
+            }
+
+            const newSt = {
+                id: (typeof cmUid === 'function') ? cmUid('st') : ('st_' + Date.now().toString(36)),
+                addedAt: Date.now(),
+                name: name,
+                note: 'GV duyệt qua Quản Lí Users'
+            };
+            cls.students.push(newSt);
+
+            // Lưu dữ liệu lớp học
+            if (typeof cmSave === 'function') {
+                cmSave();
+            } else {
+                try { localStorage.setItem('matrix_classes_v1', JSON.stringify(classes)); } catch (e) {}
+            }
+
+            // Đẩy đồng bộ lên Firebase ngay
+            try {
+                if (typeof publishClasses === 'function') {
+                    publishClasses(true);
+                }
+            } catch (e) {}
+
+            // Nếu có yêu cầu xin vào lớp tương ứng đang chờ, duyệt hoàn tất trên Firebase
+            try {
+                const a = _getApi();
+                const S = window.ClassNet ? window.ClassNet._state : null;
+                if (a && S && S.joins) {
+                    const encId = a.enc(cls.id);
+                    const m = S.joins[encId] || {};
+                    Object.keys(m).forEach(k => {
+                        const r = m[k];
+                        if (r && _normLoose(r.name) === _normLoose(name)) {
+                            r.status = 'approved';
+                            a.req('PUT', 's', 'joins/' + encId + '/' + a.enc(k), r).catch(function () {});
+                        }
+                    });
+                }
+            } catch (e) {}
+
+            if (typeof showModal === 'function') {
+                showModal('Duyệt thành công', `Đã duyệt học sinh "${name}" vào Lớp ${cls.name}.`, 'success');
+            }
+
+            // Làm mới giao diện
+            umUsersList = collectAllUsers();
+            renderUsersTable();
+            if (typeof cmRender === 'function') {
+                try { cmRender(); } catch (e) {}
+            }
+        }
+
+        window.umRemoveStudentFromClass = function (classId, studentName) {
+            if (!confirm(`Bạn có chắc chắn muốn gỡ học sinh "${studentName}" ra khỏi lớp này?`)) return;
+            const classes = _getClasses();
+            const cls = classes.find(c => c.id === classId);
+            if (!cls || !Array.isArray(cls.students)) return;
+
+            const nn = _normLoose(studentName);
+            const idx = cls.students.findIndex(s => _normLoose(s.name) === nn);
+            if (idx >= 0) {
+                const st = cls.students[idx];
+                cls.students.splice(idx, 1);
+                if (typeof cmTombStudent === 'function') {
+                    try { cmTombStudent(cls, st); } catch (e) {}
+                }
+                if (typeof cmSave === 'function') {
+                    cmSave();
+                } else {
+                    try { localStorage.setItem('matrix_classes_v1', JSON.stringify(classes)); } catch (e) {}
+                }
+                if (typeof publishClasses === 'function') {
+                    try { publishClasses(true); } catch (e) {}
+                }
+                umUsersList = collectAllUsers();
+                renderUsersTable();
+                if (typeof cmRender === 'function') {
+                    try { cmRender(); } catch (e) {}
+                }
+            }
+        };
+
+        window.umQuickApproveRequest = function (classId, key, studentName) {
+            if (window.ClassNet && typeof window.ClassNet.approve === 'function') {
+                window.ClassNet.approve(classId, key, true);
+                setTimeout(() => {
+                    umUsersList = collectAllUsers();
+                    renderUsersTable();
+                }, 500);
+            } else {
+                umAddStudentToClass(classId, studentName);
+            }
+        };
     })();
     </script>
 
