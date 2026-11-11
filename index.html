@@ -27459,7 +27459,21 @@
             }
             function approve(cid, k, ok) {
                 var a = API(); var cls = cmGetClass(cid); if (!a || !cls) return;
-                var rec = (state.joins[a.enc(cid)] || {})[k]; if (!rec) return;
+                var joinsMap = state.joins[a.enc(cid)] || {};
+                var rec = joinsMap[k];
+                if (!rec && k) {
+                    var kNorm = cmNormLoose(k);
+                    var kKeys = Object.keys(joinsMap);
+                    for (var ki = 0; ki < kKeys.length; ki++) {
+                        var candidate = joinsMap[kKeys[ki]];
+                        if (candidate && (candidate.k === k || cmNormLoose(candidate.k) === kNorm || cmNormLoose(candidate.name) === kNorm)) {
+                            rec = candidate;
+                            k = kKeys[ki];
+                            break;
+                        }
+                    }
+                }
+                if (!rec) return;
                 if (ok && !cls.students.some(function (s) { return cmNormLoose(s.name) === cmNormLoose(rec.name); })) {
                     cls.students.push({ id: cmUid('st'), addedAt: Date.now(), name: rec.name, note: 'Tham gia qua mã lớp' }); cmSave();
                 }
@@ -27469,6 +27483,7 @@
                     return a.req('PUT', 's', 'joins/' + a.enc(cid) + '/' + a.enc(k), rec);
                 }).then(function () {
                     pollJoins(); cmRender();
+                    toast('✓ Đã ' + (ok ? 'duyệt' : 'từ chối') + ' học sinh: ' + rec.name);
                 }).catch(function (e) { showModal('Lỗi', e.message, 'error'); });
                 cmRender();
             }
@@ -27483,8 +27498,8 @@
                 var h = '<div class="flex justify-between items-center mb-3"><div class="font-black text-slate-700">Yêu cầu chờ duyệt (' + pend.length + ')</div><button type="button" class="cm-btn bg-slate-200" onclick="ClassNet.refreshT()">↻ Làm mới</button></div>';
                 h += pend.length ? pend.map(function (x) {
                     return '<div class="cm-card p-3 mb-2 flex items-center justify-between gap-3"><div><b>' + E(x.r.name) + '</b> <span class="text-slate-500 font-bold">· Lớp ' + E(x.r.cls) + '</span><div class="text-xs text-slate-400">' + E(cmFmtDate(x.r.ts)) + '</div></div><div>' +
-                        '<button type="button" class="cm-btn bg-green-600 text-white" onclick="ClassNet.approve(\'' + cls.id + '\',\'' + E(x.k) + '\',true)">✓ Duyệt</button> ' +
-                        '<button type="button" class="cm-btn bg-red-100 text-red-700" onclick="ClassNet.approve(\'' + cls.id + '\',\'' + E(x.k) + '\',false)">✕ Từ chối</button></div></div>';
+                        '<button type="button" class="cm-btn bg-green-600 text-white" data-cid="' + E(cls.id) + '" data-k="' + E(x.k) + '" onclick="ClassNet.approve(this.dataset.cid, this.dataset.k, true)">✓ Duyệt</button> ' +
+                        '<button type="button" class="cm-btn bg-red-100 text-red-700" data-cid="' + E(cls.id) + '" data-k="' + E(x.k) + '" onclick="ClassNet.approve(this.dataset.cid, this.dataset.k, false)">✕ Từ chối</button></div></div>';
                 }).join('') : '<div class="cm-card p-6 text-center font-bold text-slate-400">Không có yêu cầu nào đang chờ.</div>';
                 if (done.length) h += '<div class="font-black text-slate-600 mt-5 mb-2">Đã xử lý</div>' + done.map(function (x) {
                     return '<div class="cm-card p-2 mb-1 text-sm font-bold">' + E(x.r.name) + ' · ' + E(x.r.cls) + ' — ' + (x.r.status === 'approved' ? '<span class="text-green-700">Đã duyệt</span>' : (x.r.status === 'left' ? '<span class="text-slate-500">Đã rời lớp</span>' : (x.r.status === 'removed' ? '<span class="text-slate-500">Đã bị xóa khỏi lớp</span>' : '<span class="text-red-600">Đã từ chối</span>'))) + '</div>';
@@ -28082,7 +28097,7 @@
                         ? u.classes.map(c => `
                         <span class="inline-flex items-center gap-1 bg-teal-100 text-teal-800 text-xs font-black px-2 py-0.5 rounded-full mr-1 mb-1">
                             Lớp ${_esc(c.name)}
-                            <button type="button" onclick="umRemoveStudentFromClass('${_esc(c.id)}', '${_esc(u.name)}')" title="Gỡ khỏi lớp ${_esc(c.name)}" class="text-red-500 hover:text-red-700 font-black ml-0.5">✕</button>
+                            <button type="button" data-cid="${_esc(c.id)}" data-name="${_esc(u.name)}" onclick="umRemoveStudentFromClass(this.dataset.cid, this.dataset.name)" title="Gỡ khỏi lớp ${_esc(c.name)}" class="text-red-500 hover:text-red-700 font-black ml-0.5">✕</button>
                         </span>`).join('')
                         : '<span class="text-xs font-bold text-slate-400 italic">Chưa vào lớp nào</span>';
 
@@ -28093,7 +28108,7 @@
                             <span class="text-xs font-black text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">
                                 🔔 Chờ duyệt vào Lớp ${_esc(r.className)}
                             </span>
-                            <button type="button" onclick="umQuickApproveRequest('${_esc(r.classId)}', '${_esc(r.key)}', '${_esc(u.name)}')" class="cm-btn bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-0.5 px-2">
+                            <button type="button" data-cid="${_esc(r.classId)}" data-k="${_esc(r.key)}" data-name="${_esc(u.name)}" onclick="umQuickApproveRequest(this.dataset.cid, this.dataset.k, this.dataset.name)" class="cm-btn bg-emerald-600 hover:bg-emerald-700 text-white text-xs py-0.5 px-2">
                                 ✓ Duyệt ngay
                             </button>
                         </div>
@@ -28129,13 +28144,13 @@
                                     <option value="">-- Chọn lớp --</option>
                                     ${classes.map(c => `<option value="${_esc(c.id)}" ${c.id === autoSelectClsId ? 'selected' : ''}>Lớp ${_esc(c.name)}</option>`).join('')}
                                 </select>
-                                <button type="button" onclick="umAssignStudentDirect(${idx}, '${_esc(u.name)}')" class="cm-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-sm whitespace-nowrap text-xs py-1 px-3">
+                                <button type="button" data-idx="${idx}" data-name="${_esc(u.name)}" onclick="umAssignStudentDirect(this.dataset.idx, this.dataset.name)" class="cm-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-sm whitespace-nowrap text-xs py-1 px-3">
                                     + Duyệt vào lớp
                                 </button>
-                                <button type="button" onclick="umPromptEditAndAssign('${_esc(u.name)}')" title="Sửa tên (nếu nhập sai/thiếu ký tự) rồi duyệt vào lớp" class="cm-btn bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 text-xs py-1 px-2">
+                                <button type="button" data-name="${_esc(u.name)}" onclick="umPromptEditAndAssign(this.dataset.name)" title="Sửa tên (nếu nhập sai/thiếu ký tự) rồi duyệt vào lớp" class="cm-btn bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-300 text-xs py-1 px-2">
                                     ✏️ Sửa tên & Duyệt
                                 </button>
-                                <button type="button" onclick="umDeleteStudent('${_esc(u.name)}', '${_esc(u.username)}')" title="Xóa học sinh này" class="cm-btn bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs py-1 px-2">
+                                <button type="button" data-name="${_esc(u.name)}" data-user="${_esc(u.username)}" onclick="umDeleteStudent(this.dataset.name, this.dataset.user)" title="Xóa học sinh này" class="cm-btn bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs py-1 px-2">
                                     🗑️ Xóa HS
                                 </button>
                             </div>
