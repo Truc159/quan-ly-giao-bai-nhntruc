@@ -15303,6 +15303,16 @@
         function startStudentQuiz() {
             if (questionsData.length === 0) return;
             if (!isStudentMode || isPracticeMode) { _doStartStudentQuiz(); return; }   // Giáo viên làm thử / ÔN LUYỆN: không giám sát
+            /* [GATE] Bài thi: HS phải đăng nhập đúng tên + lớp VÀ đã được duyệt vào lớp */
+            var _gId = getStudentIdentity();
+            if (!_gId.name || !_gId.cls) {
+                showModal('Chưa đăng nhập', 'Em cần đăng nhập (Họ và tên + Lớp) trước khi làm bài thi.', 'error');
+                return;
+            }
+            if (window.ClassNet && typeof ClassNet.isApprovedAny === 'function' && !ClassNet.isApprovedAny(currentTopicId)) {
+                showModal('Chưa được phê duyệt', 'Em cần tham gia lớp học và được giáo viên phê duyệt trước khi làm bài thi.\n\nHãy vào mục LỚP HỌC → Tìm lớp → Xin vào lớp, rồi chờ giáo viên duyệt.', 'error');
+                return;
+            }
             showAcRules();
         }
         function showAcRules() {
@@ -17704,6 +17714,9 @@
 
             syncUserInfoToHome(fullName, className, role);
             applyRolePermissionsUI(role);
+            if (role === 'HS' && window.ClassNet && typeof ClassNet.refreshS === 'function') {
+                try { ClassNet.refreshS(); } catch (e) { }
+            }
 
             if (loginModal) {
                 try { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); } catch (e) { }
@@ -27789,10 +27802,39 @@
                 m.classList.add('opacity-0'); setTimeout(function () { m.classList.add('hidden'); }, 250);
             };
 
+            /* [GATE] Kiểm tra HS đã được duyệt vào ÍT NHẤT 1 lớp có giao đề đang mở */
+            function isApprovedAny(topicId) {
+                var my = myMap();
+                /* Có lớp approved nào giao đúng đề này? */
+                if (topicId && state.classes && state.classes.length) {
+                    for (var i = 0; i < state.classes.length; i++) {
+                        var cl = state.classes[i];
+                        if (my[cl.id] !== 'approved') continue;
+                        if (!cl.as || !cl.as.length) continue;
+                        for (var j = 0; j < cl.as.length; j++) {
+                            if (cl.as[j] && cl.as[j].t === topicId) return true;
+                        }
+                    }
+                }
+                /* Dự phòng: kiểm tra cache (khi chưa tải xong classes) */
+                var cache = ls(LS_CACHE, []);
+                for (var c = 0; c < cache.length; c++) {
+                    var cx = cache[c];
+                    if (topicId && (cx.t || []).indexOf(topicId) >= 0) return true;
+                }
+                /* Cuối cùng: có bất kỳ lớp approved nào? */
+                var keys = Object.keys(my);
+                for (var m = 0; m < keys.length; m++) {
+                    if (my[keys[m]] === 'approved') return true;
+                }
+                return false;
+            }
+
             window.ClassNet = {
                 bannerHtml: bannerHtml, pendingCount: pendingCount, approve: approve, join: join, open: open, useCode: useCode,
                 leave: leave, viewResult: viewResult, ctxFor: ctxFor, closeStep: closeStep,   /* [CODE78] */
                 studentRemoved: studentRemoved, classDeleted: classDeleted,   /* [CODE79] */
+                isApprovedAny: isApprovedAny,   /* [GATE] */
                 setView: function (v) { state.view = v; state.q = ''; render(); },
                 search: function (v) { state.q = v; render(); },
                 refreshS: function () { return loadClasses(); }, refreshT: function () { publishClasses(true); pollJoins(); },
@@ -27810,7 +27852,7 @@
                 window.openClassManager = function () { var r = _oc.apply(this, arguments); try { publishClasses(false); pollJoins(); } catch (e) { } try { window.CloudSync.schedule(true); } catch (e) { } return r; };
             }
             setInterval(function () { if (!document.hidden && !isStudentMode) { pollJoins(); publishClasses(false); } }, 15000);   /* [CODE80] 10s -> 15s */
-            setTimeout(function () { if (!isStudentMode) { publishClasses(false); pollJoins(); } }, 3000);
+            setTimeout(function () { if (!isStudentMode) { publishClasses(false); pollJoins(); } else { loadClasses(true); } }, 2000);
             /* Học sinh: tự làm mới danh sách lớp khi đang mở cửa sổ LỚP HỌC */
             /* [CODE79] Làm mới danh sách lớp: 15 giây/lần khi đang mở LỚP HỌC, 60 giây/lần khi đóng; và ngay khi quay lại trang */
             setInterval(function () {
