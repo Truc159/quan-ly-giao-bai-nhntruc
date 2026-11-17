@@ -8713,77 +8713,81 @@
         }
 
         /* ==========================================================================
-           BỐ TRÍ CÁC TAB BUTTON DỌC PHÍA BÊN TRÁI TRÊN ĐIỆN THOẠI & TABLET (TƯƠNG TỰ HÌNH 1)
-           KÍCH CỠ CHỮ ĐỒNG ĐỀU, KHÔNG BỊ TRÀN CHỮ, KHÔNG BỊ KHUẤT CHỮ
-           KHÔNG GIAN CÒN LẠI TỐI ƯU HÓA ĐỂ LÀM BÀI
+           BOTTOM NAV BAR CHO ĐIỆN THOẠI & TABLET (PORTRAIT)
+           - Sidebar ẩn, user-box hiện gọn ở header
+           - Bottom nav cố định ở dưới cùng: 🏠 THƯ VIỆN TỰ LUYỆN LỚP HỌC
+           - Right-pane chiếm toàn bộ chiều rộng + chiều cao
            ========================================================================== */
+
+        /* 1. APP WRAPPER: flex-column, full viewport */
         body.layout-portrait:not(.printing-a4) #app-wrapper {
             display: flex !important;
-            flex-direction: row !important;
+            flex-direction: column !important;
             align-items: stretch !important;
-            gap: 5px !important;
-            padding: calc(env(safe-area-inset-top, 0px) + 3px) 4px calc(env(safe-area-inset-bottom, 0px) + 4px) 4px !important;
+            gap: 0 !important;
+            padding: 0 !important;
             box-sizing: border-box !important;
             width: 100vw !important;
             max-width: 100vw !important;
             height: 100vh !important;
+            height: 100dvh !important;
             max-height: 100vh !important;
+            max-height: 100dvh !important;
             overflow: hidden !important;
         }
 
-        /* 1. KHUNG THANH BÊN (SIDEBAR) ĐẶT DỌC BÊN TRÁI */
+        /* 2. SIDEBAR: ẩn hoàn toàn, chuyển thành top-bar + bottom-bar */
         body.layout-portrait:not(.printing-a4) #left-sidebar {
-            width: clamp(128px, 33vw, 146px) !important;
-            min-width: clamp(128px, 33vw, 146px) !important;
-            max-width: clamp(128px, 33vw, 146px) !important;
-            flex: 0 0 clamp(128px, 33vw, 146px) !important;
-            height: 100% !important;
-            max-height: 100% !important;
-            overflow-y: auto !important;
-            overflow-x: hidden !important;
+            position: fixed !important;
+            top: 0 !important; left: 0 !important; right: 0 !important;
+            width: 100vw !important;
+            max-width: 100vw !important;
+            height: auto !important;
+            min-height: auto !important;
+            max-height: none !important;
+            flex: 0 0 auto !important;
             display: flex !important;
             flex-direction: column !important;
-            padding: 5px 3.5px !important;
-            border-radius: 14px !important;
-            border: 1.5px solid #dbeafe !important;
-            background: #ffffff !important;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
-            scrollbar-width: none !important;
-            box-sizing: border-box !important;
-            z-index: 10 !important;
-        }
-        body.layout-portrait:not(.printing-a4) #left-sidebar::-webkit-scrollbar {
-            display: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            overflow: visible !important;
+            z-index: 1000 !important;
+            pointer-events: none !important;
         }
 
-        /* 2. KHUNG THÔNG TIN NGƯỜI DÙNG Ở ĐẦU THANH BÊN (USER BOX) */
+        /* 3. USER-BOX: thanh header nhỏ gọn ở trên cùng */
         body.layout-portrait:not(.printing-a4) #left-sidebar #user-box {
             display: flex !important;
-            flex-direction: column !important;
+            flex-direction: row !important;
             align-items: center !important;
-            justify-content: center !important;
-            text-align: center !important;
-            padding: 5px 3px 4px 3px !important;
-            border-radius: 10px !important;
-            background: linear-gradient(180deg, #f0f7ff 0%, #e0f2fe 100%) !important;
-            border: 1px solid #bae6fd !important;
-            margin-bottom: 5px !important;
+            justify-content: flex-start !important;
+            gap: 6px !important;
+            padding: calc(env(safe-area-inset-top, 0px) + 4px) 10px 4px 10px !important;
+            margin: 0 !important;
+            background: linear-gradient(135deg, #f8faff 0%, #eef3ff 100%) !important;
+            border: none !important;
+            border-bottom: 1px solid #dbeafe !important;
+            border-radius: 0 !important;
+            box-shadow: 0 1px 4px rgba(15,23,42,0.06) !important;
             min-height: auto !important;
-            gap: 2px !important;
+            pointer-events: auto !important;
             box-sizing: border-box !important;
+            width: 100% !important;
         }
         body.layout-portrait:not(.printing-a4) #left-sidebar #c99-wrap {
-            width: 32px !important;
-            height: 32px !important;
-            margin: 0 auto 2px auto !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
+            width: 28px !important;
+            height: 28px !important;
+            margin: 0 !important;
+            flex-shrink: 0 !important;
         }
         body.layout-portrait:not(.printing-a4) #left-sidebar #c99-ring {
-            width: 32px !important;
-            height: 32px !important;
-            min-width: 32px !important;
+            width: 28px !important;
+            height: 28px !important;
+            min-width: 28px !important;
             border-width: 1.5px !important;
             margin: 0 !important;
         }
@@ -8804,64 +8808,100 @@
             display: inline !important;
         }
         body.layout-portrait:not(.printing-a4) #left-sidebar #user-name {
-            font-size: 11px !important;
+            font-size: 12px !important;
             font-weight: 700 !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
-            max-width: 100% !important;
+            max-width: 40vw !important;
             line-height: 1.2 !important;
             color: #1e3a8a !important;
-            margin-top: 1px !important;
+            margin: 0 !important;
         }
         body.layout-portrait:not(.printing-a4) #left-sidebar #user-class {
-            font-size: 9.5px !important;
+            font-size: 10.5px !important;
             font-weight: 600 !important;
             color: #475569 !important;
             white-space: nowrap !important;
             line-height: 1.2 !important;
+            margin: 0 !important;
         }
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico { display: none !important; }
 
-        /* 3. DANH SÁCH TAB BUTTON XẾP DỌC THEO CỘT BÊN TRÁI (TƯƠNG TỰ HÌNH 1) */
-        body.layout-portrait:not(.printing-a4) #bottom-controls-grid {
+        /* Nút power/logout icon bên cạnh user-box */
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico {
             display: flex !important;
-            flex-direction: column !important;
-            gap: 4px !important;
-            margin-top: 0 !important;
-            width: 100% !important;
-            overflow: visible !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin-left: auto !important;
+            pointer-events: auto !important;
+            background: #fee2e2 !important;
+            border-radius: 50% !important;
+            width: 28px !important;
+            height: 28px !important;
             padding: 0 !important;
-            flex: 1 1 auto !important;
+            border: 1px solid #fca5a5 !important;
+            color: #dc2626 !important;
+            cursor: pointer !important;
+            flex-shrink: 0 !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico svg {
+            width: 14px !important;
+            height: 14px !important;
+            stroke-width: 2.5 !important;
         }
 
-        /* CÁC NÚT TAB DỌC: CHIỀU CAO VÀ CỠ CHỮ ĐỒNG BỘ 100%, KHÔNG BỊ TRÀN CHỮ */
-        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
-            width: 100% !important;
-            height: 37px !important;
-            min-height: 37px !important;
-            max-height: 37px !important;
-            padding: 0 6px !important;
-            border-radius: 9px !important;
-            border: 1px solid rgba(255, 255, 255, 0.75) !important;
-            box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.1) !important;
+        /* 4. BOTTOM-CONTROLS-GRID: thanh nav ở dưới cùng */
+        body.layout-portrait:not(.printing-a4) #bottom-controls-grid {
+            position: fixed !important;
+            bottom: 0 !important; left: 0 !important; right: 0 !important;
+            width: 100vw !important;
             display: flex !important;
             flex-direction: row !important;
-            align-items: center !important;
-            justify-content: flex-start !important;
-            gap: 4px !important;
-            white-space: nowrap !important;
+            align-items: stretch !important;
+            justify-content: stretch !important;
+            gap: 0 !important;
+            margin: 0 !important;
+            padding: 3px 4px calc(env(safe-area-inset-bottom, 0px) + 3px) 4px !important;
+            background: linear-gradient(0deg, #f8fafc 60%, #f1f5f9 100%) !important;
+            border-top: 1.5px solid #e2e8f0 !important;
+            box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.08) !important;
+            z-index: 1001 !important;
+            pointer-events: auto !important;
+            box-sizing: border-box !important;
+            overflow: hidden !important;
             flex: 0 0 auto !important;
-            text-align: left !important;
+        }
+
+        /* 5. CÁC NÚT TAB TRONG BOTTOM NAV */
+        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
+            flex: 1 1 0 !important;
+            min-width: 0 !important;
+            height: 44px !important;
+            min-height: 44px !important;
+            max-height: 44px !important;
+            padding: 2px 2px !important;
+            border-radius: 10px !important;
+            border: none !important;
+            box-shadow: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 1px !important;
+            white-space: nowrap !important;
+            text-align: center !important;
             color: #ffffff !important;
             box-sizing: border-box !important;
             overflow: hidden !important;
-            text-overflow: ellipsis !important;
+            margin: 0 2px !important;
+            pointer-events: auto !important;
+            cursor: pointer !important;
+            touch-action: manipulation !important;
         }
 
-        /* Biểu tượng trong nút */
+        /* Icon trong nút bottom nav */
         body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:first-child {
-            font-size: 13.5px !important;
+            font-size: 16px !important;
             line-height: 1 !important;
             flex-shrink: 0 !important;
             display: inline-flex !important;
@@ -8870,71 +8910,145 @@
             margin: 0 !important;
         }
 
-        /* Chữ trong tất cả các nút: ĐỒNG BỘ KÍCH CỠ 10.5px, ĐẬM NÉT, KHÔNG TRÀN KHỎI KHUNG */
+        /* Chữ trong nút bottom nav */
         body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:last-child {
-            font-size: 10.5px !important;
+            font-size: 9px !important;
             font-weight: 700 !important;
-            letter-spacing: -0.02em !important;
-            line-height: 1 !important;
-            display: inline-block !important;
+            letter-spacing: -0.01em !important;
+            line-height: 1.1 !important;
+            display: block !important;
             text-transform: uppercase !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
-            flex: 1 1 auto !important;
-        }
-
-        /* Nút Trang chủ hiển thị đầy đủ icon + chữ TRANG CHỦ */
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home {
-            width: 100% !important;
-            min-width: 0 !important;
             max-width: 100% !important;
-            padding: 0 6px !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: flex-start !important;
-            gap: 4px !important;
         }
 
-        /* Nút Đăng xuất ở cuối danh sách */
+        /* Nút TRANG CHỦ: hiện icon home, ẩn chữ trên bottom nav nhỏ */
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home {
+            flex: 0 0 44px !important;
+            max-width: 48px !important;
+            border-radius: 10px !important;
+        }
+
+        /* Nút ĐĂNG XUẤT: ẩn ở bottom nav (đã có icon ở header) */
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout {
-            display: flex !important;
-            margin-top: 8px !important;
-            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-            color: #ffffff !important;
-            border: 1px solid rgba(255, 255, 255, 0.75) !important;
-            box-shadow: 0 1.5px 4px rgba(220, 38, 38, 0.35) !important;
-            height: 37px !important;
-            min-height: 37px !important;
-            max-height: 37px !important;
-            padding: 0 6px !important;
-            border-radius: 9px !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            align-items: center !important;
-            justify-content: flex-start !important;
-            gap: 4px !important;
-            cursor: pointer !important;
+            display: none !important;
         }
 
-        /* 4. KHU VỰC NỘI DUNG BÊN PHẢI (RIGHT PANE): TỐI ƯU TOÀN DIỆN */
+        /* NÚT NGÂN HÀNG ĐỀ ĐỒNG BỘ */
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank,
+        body.layout-portrait:not(.printing-a4) #left-sidebar button#btn-bank {
+            border: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+            height: 44px !important;
+            min-height: 44px !important;
+            max-height: 44px !important;
+            padding: 2px 2px !important;
+            letter-spacing: normal !important;
+            font-weight: 700 !important;
+            margin: 0 2px !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank *,
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span,
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span:last-child,
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-desk,
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-mob {
+            font-size: 9px !important;
+            font-weight: 700 !important;
+            letter-spacing: -0.01em !important;
+            line-height: 1.1 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span:first-child,
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-ico,
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-desk span:first-child {
+            font-size: 16px !important;
+            line-height: 1 !important;
+        }
+
+        /* 6. RIGHT PANE: full width, trừ chỗ cho header + bottom nav */
         body.layout-portrait:not(.printing-a4) #right-pane {
-            flex: 1 1 0 !important;
-            min-width: 0 !important;
-            width: auto !important;
-            height: 100% !important;
-            max-height: 100% !important;
+            position: fixed !important;
+            top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            height: 100dvh !important;
+            /* padding-top cho user header, padding-bottom cho bottom nav + safe-area */
+            padding: calc(env(safe-area-inset-top, 0px) + 38px) 6px calc(env(safe-area-inset-bottom, 0px) + 52px) 6px !important;
+            border: none !important;
+            border-radius: 0 !important;
+            background: #ffffff !important;
+            box-shadow: none !important;
+            box-sizing: border-box !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
-            padding: 6px !important;
-            border-radius: 14px !important;
-            border: 1.5px solid #dbeafe !important;
-            background: #ffffff !important;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08) !important;
-            box-sizing: border-box !important;
+            z-index: 1 !important;
+            -webkit-overflow-scrolling: touch !important;
+            pointer-events: auto !important;
+            touch-action: pan-y !important;
         }
 
-        /* 5. KHU VỰC TẠO ĐỀ NHANH: SỬA LỖI KHUẤT CHỮ 2 BÊN (NHẬP TỪ WORD & MỞ THƯ VIỆN) */
+        /* 7. TABLET (600px - 1024px): tăng kích thước chút */
+        @media (min-width: 600px) and (max-width: 1024px) {
+            body.layout-portrait:not(.printing-a4) #left-sidebar #user-box {
+                padding: calc(env(safe-area-inset-top, 0px) + 5px) 14px 5px 14px !important;
+                gap: 8px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #c99-wrap,
+            body.layout-portrait:not(.printing-a4) #left-sidebar #c99-ring {
+                width: 34px !important;
+                height: 34px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #user-name {
+                font-size: 14px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #user-class {
+                font-size: 12px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #bottom-controls-grid {
+                padding: 4px 8px calc(env(safe-area-inset-bottom, 0px) + 4px) 8px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
+                height: 50px !important;
+                min-height: 50px !important;
+                max-height: 50px !important;
+                border-radius: 12px !important;
+                margin: 0 3px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:first-child {
+                font-size: 18px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:last-child {
+                font-size: 10.5px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home {
+                flex: 0 0 52px !important;
+                max-width: 56px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #right-pane {
+                padding: calc(env(safe-area-inset-top, 0px) + 46px) 10px calc(env(safe-area-inset-bottom, 0px) + 60px) 10px !important;
+            }
+            body.layout-portrait:not(.printing-a4) .c83-orbit {
+                transform: scale(0.85) !important;
+                margin: -18px auto !important;
+            }
+        }
+
+        /* 8. CÁC NÚT TEACHER-ONLY: vẫn ẩn/hiện đúng */
+        body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn.hidden,
+        body.layout-portrait:not(.printing-a4) #left-sidebar .hidden:not(#user-box):not(#bottom-controls-grid) {
+            display: none !important;
+        }
+
+        /* Quickbox */
         body.layout-portrait:not(.printing-a4) .c83-quickbox {
             overflow: visible !important;
             padding: 8px 0 !important;
@@ -8958,299 +9072,7 @@
             font-size: 11.5px !important;
         }
 
-        /* 6. TỐI ƯU CHO TABLET (MÀN HÌNH TỪ 600px ĐẾN 1024px) */
-        @media (min-width: 600px) and (max-width: 1024px) {
-            body.layout-portrait:not(.printing-a4) #left-sidebar {
-                width: 180px !important;
-                min-width: 180px !important;
-                max-width: 180px !important;
-                flex: 0 0 180px !important;
-                padding: 8px 6px !important;
-            }
-            body.layout-portrait:not(.printing-a4) #left-sidebar #user-box {
-                padding: 8px 6px !important;
-            }
-            body.layout-portrait:not(.printing-a4) #left-sidebar #c99-wrap {
-                width: 44px !important;
-                height: 44px !important;
-            }
-            body.layout-portrait:not(.printing-a4) #left-sidebar #c99-ring {
-                width: 44px !important;
-                height: 44px !important;
-            }
-            body.layout-portrait:not(.printing-a4) #left-sidebar #user-role-label {
-                font-size: 11px !important;
-            }
-            body.layout-portrait:not(.printing-a4) #left-sidebar #user-name {
-                font-size: 13.5px !important;
-            }
-            body.layout-portrait:not(.printing-a4) #left-sidebar #user-class {
-                font-size: 12px !important;
-            }
-            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
-                height: 42px !important;
-                min-height: 42px !important;
-                max-height: 42px !important;
-                padding: 0 10px !important;
-                border-radius: 11px !important;
-                gap: 7px !important;
-            }
-            body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:last-child {
-                font-size: 12.5px !important;
-            }
-            body.layout-portrait:not(.printing-a4) .c83-orbit {
-                transform: scale(0.85) !important;
-                margin: -18px auto !important;
-            }
-            body.layout-portrait:not(.printing-a4) #right-pane {
-                padding: 10px !important;
-            }
-        }
-
-        /* ==========================================================================
-           TUYỆT ĐỐI BẢO TOÀN NGUYÊN VẸN 100% CÔNG THỨC TOÁN - LÝ - HÓA VÀ NỘI DUNG CÂU HỎI
-           KHÔNG ĐƯỢC CAN THIỆP VÀO LOGIC HIỂN THỊ CÔNG THỨC TOÁN-LY-HÓA
-           ========================================================================== */
-        :is(#questions-container, .qc-live) .q-title-text,
-        :is(#questions-container, .qc-live) .q-title-text *:not(.katex):not(.katex *),
-        :is(#questions-container, .qc-live) .q-option-btn,
-        :is(#questions-container, .qc-live) .q-option-btn *:not(.katex):not(.katex *),
-        :is(#questions-container, .qc-live) .q-tf-row,
-        :is(#questions-container, .qc-live) .q-tf-row *:not(.katex):not(.katex *),
-        :is(#questions-container, .qc-live) .q-sa-label,
-        :is(#questions-container, .qc-live) .q-sa-key,
-        :is(#questions-container, .qc-live) .q-sa-box,
-        :is(#questions-container, .qc-live) .q-sa-input,
-        :is(#questions-container, .qc-live) .q-part-line,
-        :is(#questions-container, .qc-live) .q-part-header,
-        :is(#questions-container, .qc-live) .q-part-header *:not(.katex):not(.katex *),
-        .sol-panel, .sol-panel *:not(.katex):not(.katex *) {
-            font-family: 'Roboto', sans-serif !important;
-            -webkit-text-stroke: 0 !important;
-        }
-        .katex, .katex *, .katex-display, .katex-display *,
-        .katex-html, .katex-html *,
-        annotation, semantics, mrow, mi, mo, mn, msup, msub, mfrac, msqrt, mroot {
-            font-family: KaTeX_Main, 'Times New Roman', serif !important;
-            -webkit-text-stroke: 0 !important;
-        }
-    
-        /* ĐỒNG BỘ NÚT NGÂN HÀNG ĐỀ HOÀN TOÀN NHƯ CÁC TAB KHÁC (CỠ CHỮ 10.5px, KHÔNG BỊ TRÀN CHỮ) */
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank,
-        body.layout-portrait:not(.printing-a4) #left-sidebar button#btn-bank {
-            border: 1px solid rgba(255, 255, 255, 0.75) !important;
-            box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.1) !important;
-            outline: none !important;
-            height: 37px !important;
-            min-height: 37px !important;
-            max-height: 37px !important;
-            padding: 0 6px !important;
-            letter-spacing: normal !important;
-            font-weight: 700 !important;
-            margin: 0 !important;
-        }
-
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank *,
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span,
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span:last-child,
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-desk,
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-mob {
-            font-size: 10.5px !important;
-            font-weight: 700 !important;
-            letter-spacing: -0.02em !important;
-            line-height: 1 !important;
-            white-space: nowrap !important;
-            overflow: hidden !important;
-            text-overflow: ellipsis !important;
-        }
-
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span:first-child,
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-ico,
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-desk span:first-child {
-            font-size: 13.5px !important;
-            line-height: 1 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-        }
-    
-        /* [CODE-FIX-LOGOUT] HIỂN THỊ NÚT ĐĂNG XUẤT RÕ RÀNG Ở CẢ 2 NƠI (ĐÁY THANH BÊN & GÓC THẺ USER) */
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout {
-            display: flex !important;
-            margin-top: 8px !important;
-            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-            color: #ffffff !important;
-            border: 1px solid rgba(255, 255, 255, 0.75) !important;
-            box-shadow: 0 1.5px 4px rgba(220, 38, 38, 0.35) !important;
-            height: 37px !important;
-            min-height: 37px !important;
-            max-height: 37px !important;
-            padding: 0 6px !important;
-            border-radius: 9px !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-            align-items: center !important;
-            justify-content: flex-start !important;
-            gap: 4px !important;
-            cursor: pointer !important;
-        }
-
-        body.layout-portrait:not(.printing-a4) #left-sidebar #user-box {
-            position: relative !important;
-        }
-
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico { display: none !important; }
-
-        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-logout-ico svg {
-            width: 13px !important;
-            height: 13px !important;
-            stroke-width: 2.8 !important;
-        }
-
-        /* [CODE-FIX-LOGIN-MODAL] SỬA LỖI KHUNG NHẬP MẬT KHẨU / TÊN ĐĂNG NHẬP BỊ TỤT XUỐNG KHI MỞ BÀN PHÍM VÀ CHỈ HIỆN KHI MỞ MODAL (KHÔNG CHẶN CẢM ỨNG CỦA CÁC TAB) */
-        .hidden,
-        #login-modal.hidden,
-        body.layout-portrait:not(.printing-a4) #login-modal.hidden,
-        #class-modal.hidden,
-        #user-modal.hidden,
-        #library-modal.hidden {
-            display: none !important;
-            pointer-events: none !important;
-            visibility: hidden !important;
-        }
-
-        body.layout-portrait:not(.printing-a4) #login-modal:not(.hidden) {
-            position: fixed !important;
-            inset: 0 !important;
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            bottom: 0 !important;
-            width: 100vw !important;
-            height: 100% !important;
-            z-index: 9999 !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            overflow-y: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-            padding: 8px !important;
-            box-sizing: border-box !important;
-            pointer-events: auto !important;
-        }
-
-        body.kb-form #login-modal:not(.hidden),
-        body.kb-typing #login-modal:not(.hidden),
-        body.layout-portrait:not(.printing-a4).kb-form #login-modal:not(.hidden) {
-            align-items: flex-start !important;
-            padding-top: calc(env(safe-area-inset-top, 0px) + 6px) !important;
-        }
-
-        body.kb-form #login-modal:not(.hidden) > div,
-        body.kb-typing #login-modal:not(.hidden) > div,
-        body.layout-portrait:not(.printing-a4).kb-form #login-modal:not(.hidden) > div,
-        body.layout-portrait:not(.printing-a4).kb-typing #login-modal:not(.hidden) > div {
-            margin-top: 0 !important;
-            margin-bottom: auto !important;
-            max-height: 380px !important;
-            max-height: min(390px, calc(var(--vvp-h, 100vh) - 16px)) !important;
-            overflow-y: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-        }
-
-        body.kb-form #login-modal .p-6,
-        body.kb-typing #login-modal .p-6,
-        body.layout-portrait:not(.printing-a4).kb-form #login-modal .p-6,
-        body.layout-portrait:not(.printing-a4).kb-typing #login-modal .p-6 {
-            padding-top: 10px !important;
-            padding-bottom: 260px !important;
-        }
-
-        body.kb-form #login-modal .space-y-4 > :not([hidden]) ~ :not([hidden]),
-        body.kb-typing #login-modal .space-y-4 > :not([hidden]) ~ :not([hidden]),
-        body.layout-portrait:not(.printing-a4).kb-form #login-modal .space-y-4 > :not([hidden]) ~ :not([hidden]) {
-            margin-top: 8px !important;
-        }
-
-        body.kb-form #login-modal label,
-        body.kb-typing #login-modal label,
-        body.layout-portrait:not(.printing-a4).kb-form #login-modal label {
-            margin-bottom: 2px !important;
-            font-size: 12px !important;
-        }
-    
-        /* [CODE-FIX-LANDSCAPE-SCROLL] CHO PHÉP THANH BÊN TRƯỢT LÊN/XUỐNG MƯỢT MÀ KHI XOAY NGANG */
-        #left-sidebar {
-            overflow-y: auto !important;
-            overflow-x: hidden !important;
-            -webkit-overflow-scrolling: touch !important;
-            scrollbar-width: thin !important;
-        }
-
-        body:not(.layout-portrait) #left-sidebar #btn-logout {
-            display: flex !important;
-            margin-top: 32px !important;
-            margin-bottom: 16px !important;
-            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-            color: #ffffff !important;
-            border: 1px solid rgba(255, 255, 255, 0.75) !important;
-            box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35) !important;
-            cursor: pointer !important;
-        }
-
-        /* Khi xoay ngang trên điện thoại / tablet thấp: tinh chỉnh kích thước để toàn bộ các tab và nút ĐĂNG XUẤT vừa vặn trên màn hình */
-        @media (max-height: 700px) {
-            body:not(.layout-portrait) #left-sidebar {
-                padding: 6px 8px !important;
-                overflow-y: auto !important;
-                -webkit-overflow-scrolling: touch !important;
-            }
-            body:not(.layout-portrait) #left-sidebar #user-box {
-                padding: 4px 6px !important;
-                margin-bottom: 4px !important;
-            }
-            body:not(.layout-portrait) #left-sidebar #c99-wrap,
-            body:not(.layout-portrait) #left-sidebar #c99-ring {
-                width: 38px !important;
-                height: 38px !important;
-            }
-            body:not(.layout-portrait) #left-sidebar #user-name {
-                font-size: 13.5px !important;
-                margin-top: 1px !important;
-            }
-            body:not(.layout-portrait) #left-sidebar #user-role-label {
-                font-size: 10.5px !important;
-            }
-            body:not(.layout-portrait) #bottom-controls-grid {
-                gap: 4px !important;
-                margin-top: 5px !important;
-            }
-            body:not(.layout-portrait) #left-sidebar .side-btn {
-                font-size: 12.5px !important;
-                padding: 6px 8px !important;
-                border-radius: 9px !important;
-                min-height: 33px !important;
-                height: 33px !important;
-                gap: 6px !important;
-            }
-            body:not(.layout-portrait) #left-sidebar #btn-logout {
-            display: flex !important;
-            margin-top: 32px !important;
-            margin-bottom: 16px !important;
-            background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-            color: #ffffff !important;
-            border: 1px solid rgba(255, 255, 255, 0.75) !important;
-            box-shadow: 0 2px 6px rgba(220, 38, 38, 0.35) !important;
-            cursor: pointer !important;
-        }
-        }
-    
-        /* ĐẢM BẢO CÁC NÚT TAB VÀ KHUNG NỘI DUNG NHẬN CHẠM VÀ VUỐT TRƯỢT 100% */
-        body.layout-portrait:not(.printing-a4) #left-sidebar {
-            pointer-events: auto !important;
-            touch-action: pan-y !important;
-            -webkit-overflow-scrolling: touch !important;
-        }
+        /* Touch + pointer events */
         body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
             pointer-events: auto !important;
             cursor: pointer !important;
