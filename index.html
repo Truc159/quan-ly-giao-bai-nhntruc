@@ -8691,9 +8691,12 @@
             display: none !important;
         }
 
-        /* Khi là Học sinh: Hiện nút LỚP HỌC, Ẩn tất cả nút Giáo viên */
+        /* Khi là Học sinh: Hiện nút LỚP HỌC, Ẩn tất cả nút Giáo viên & Ngân hàng đề */
         body.is-student #left-sidebar #btn-student-class {
             display: flex !important;
+        }
+        body.is-student #left-sidebar #btn-bank {
+            display: none !important;
         }
         body.is-student #left-sidebar #btn-class-manager,
         body.is-student #left-sidebar #btn-user-manager,
@@ -8876,59 +8879,74 @@
         body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn {
             flex: 1 1 0 !important;
             min-width: 0 !important;
-            height: 44px !important;
-            min-height: 44px !important;
-            max-height: 44px !important;
-            padding: 2px 2px !important;
-            border-radius: 10px !important;
+            height: 42px !important;
+            min-height: 42px !important;
+            max-height: 42px !important;
+            padding: 2px 3px !important;
+            border-radius: 9px !important;
             border: none !important;
-            box-shadow: none !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
             display: flex !important;
             flex-direction: column !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 1px !important;
+            gap: 0 !important;
             white-space: nowrap !important;
             text-align: center !important;
             color: #ffffff !important;
             box-sizing: border-box !important;
             overflow: hidden !important;
-            margin: 0 2px !important;
+            margin: 0 1.5px !important;
             pointer-events: auto !important;
             cursor: pointer !important;
             touch-action: manipulation !important;
         }
 
-        /* Icon trong nút bottom nav */
+        /* Mặc định trên bottom nav điện thoại: ẨN HẾT ICON, CHỈ DÙNG CHỮ */
         body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:first-child {
-            font-size: 16px !important;
-            line-height: 1 !important;
-            flex-shrink: 0 !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            margin: 0 !important;
+            display: none !important;
         }
 
-        /* Chữ trong nút bottom nav */
+        /* Chữ trong tất cả các nút: ĐỒNG BỘ 100%, ĐẬM, HẸP, GỌN ĐẸP */
         body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:last-child {
-            font-size: 9px !important;
-            font-weight: 700 !important;
-            letter-spacing: -0.01em !important;
-            line-height: 1.1 !important;
+            font-size: 11px !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.03em !important;
+            line-height: 1.15 !important;
             display: block !important;
             text-transform: uppercase !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
             max-width: 100% !important;
+            text-align: center !important;
         }
 
-        /* Nút TRANG CHỦ: hiện icon home, ẩn chữ trên bottom nav nhỏ */
+        /* Khi có nhiều tab (Giáo viên có 5-6 tab): tự động thu cỡ chữ cân đối cho vừa màn hình */
+        body.layout-portrait:not(.printing-a4):not(.is-student) #left-sidebar .side-btn span:last-child {
+            font-size: 9.5px !important;
+            letter-spacing: -0.04em !important;
+            font-weight: 800 !important;
+        }
+
+        /* Nút TRANG CHỦ: DUY NHẤT CHỈ HIỆN ICON HÌNH CÁI NHÀ, ẨN CHỮ */
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home {
-            flex: 0 0 44px !important;
-            max-width: 48px !important;
-            border-radius: 10px !important;
+            flex: 0 0 42px !important;
+            width: 42px !important;
+            max-width: 44px !important;
+            border-radius: 9px !important;
+            padding: 0 !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home span:first-child {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-size: 20px !important;
+            line-height: 1 !important;
+            margin: 0 !important;
+        }
+        body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home span:last-child {
+            display: none !important;
         }
 
         /* Nút ĐĂNG XUẤT: ẩn ở bottom nav (đã có icon ở header) */
@@ -8936,29 +8954,29 @@
             display: none !important;
         }
 
-        /* NÚT NGÂN HÀNG ĐỀ ĐỒNG BỘ */
+        /* NÚT NGÂN HÀNG ĐỀ: nếu hiển thị (bên giáo viên), đồng bộ kích thước & chữ như các nút khác */
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank,
         body.layout-portrait:not(.printing-a4) #left-sidebar button#btn-bank {
             border: none !important;
-            box-shadow: none !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
             outline: none !important;
-            height: 44px !important;
-            min-height: 44px !important;
-            max-height: 44px !important;
-            padding: 2px 2px !important;
+            height: 42px !important;
+            min-height: 42px !important;
+            max-height: 42px !important;
+            padding: 2px 3px !important;
             letter-spacing: normal !important;
-            font-weight: 700 !important;
-            margin: 0 2px !important;
+            font-weight: 800 !important;
+            margin: 0 1.5px !important;
         }
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank *,
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span,
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span:last-child,
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-desk,
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-mob {
-            font-size: 9px !important;
-            font-weight: 700 !important;
-            letter-spacing: -0.01em !important;
-            line-height: 1.1 !important;
+            font-size: 9.5px !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.04em !important;
+            line-height: 1.15 !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
@@ -8966,8 +8984,7 @@
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank span:first-child,
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-ico,
         body.layout-portrait:not(.printing-a4) #left-sidebar #btn-bank .bk-desk span:first-child {
-            font-size: 16px !important;
-            line-height: 1 !important;
+            display: none !important;
         }
 
         /* 6. RIGHT PANE: full width, trừ chỗ cho header + bottom nav */
@@ -9024,14 +9041,27 @@
                 margin: 0 3px !important;
             }
             body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:first-child {
-                font-size: 18px !important;
+                display: none !important;
             }
             body.layout-portrait:not(.printing-a4) #left-sidebar .side-btn span:last-child {
-                font-size: 10.5px !important;
+                font-size: 12px !important;
+                font-weight: 800 !important;
+                letter-spacing: -0.02em !important;
+            }
+            body.layout-portrait:not(.printing-a4):not(.is-student) #left-sidebar .side-btn span:last-child {
+                font-size: 11px !important;
             }
             body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home {
-                flex: 0 0 52px !important;
-                max-width: 56px !important;
+                flex: 0 0 50px !important;
+                width: 50px !important;
+                max-width: 52px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home span:first-child {
+                display: inline-flex !important;
+                font-size: 22px !important;
+            }
+            body.layout-portrait:not(.printing-a4) #left-sidebar #btn-go-home span:last-child {
+                display: none !important;
             }
             body.layout-portrait:not(.printing-a4) #right-pane {
                 padding: calc(env(safe-area-inset-top, 0px) + 46px) 10px calc(env(safe-area-inset-bottom, 0px) + 60px) 10px !important;
